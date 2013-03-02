@@ -1,0 +1,27 @@
+//
+// Prefix header for all source files of the 'House' target in the 'House' project
+//
+
+
+#define TERRAIN_KEY_STEP 16.0
+#define TERRAIN_KEY_STEP_HALF 8.0
+#define MAX_TERRAIN_KEY_COUNT 10000
+#define MAX_CONTROLLABLE_ACTOR_COUNT 10000
+#define CELL_POOL_SIZE 2000
+#define WORLD_MOVE_MIN_OFFSET 0.5
+#define WORLD_LINEAR_MOVE_STEP_NUM 50
+#define WORLD_MOVE_STEP_NUM 10;
+
+
+
+#import <Availability.h>
+
+
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import "GlobalDefine.h"
+
+#endif
