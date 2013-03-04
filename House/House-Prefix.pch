@@ -23,5 +23,6 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import "GlobalDefine.h"
+#import "TDeviceUtil.h"
 
 #endif

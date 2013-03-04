@@ -16,8 +16,8 @@
 #import "b2CellFactory.h"
 #import "b2ActorCore.h"
 #import "b2ActorController.h"
-#import "ScreenUtil.h"
 #import "b2ActorCoreManager.h"
+
 
 
 //static TerrainUtil* _sharedTerrainUtil;
@@ -233,13 +233,13 @@ static b2MapEngine* _sharedb2MapEngine;
 - (void)calcuRange{
 
     b2WorldManager *worldM = [b2WorldManager sharedInstance];
-    ScreenUtil* screenUtil = [ScreenUtil sharedInstance];
+
     CGPoint pos = [worldM pos];
     
     scale = [worldM scale];
     
     float offScreenW = 50.0/scale;
-    float screenW = [screenUtil w]/scale;
+    float screenW = [[TDeviceUtil sharedInstance] screenWidth]/scale;
     float halfScreenW = screenW/2;
     
     

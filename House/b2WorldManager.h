@@ -26,8 +26,6 @@ class b2WorldManagerCInterface{
 @class b2TerrainManager;
 @class b2ActorCore;
 //@class GLESDebugDraw;
-@class ScreenUtil;
-
 
 @interface b2WorldManager :NSObject{
     b2World* world;   
@@ -40,7 +38,6 @@ class b2WorldManagerCInterface{
     int numInView;
     CGPoint targetPos;
     float targetScale;    
-    ScreenUtil* screenUtil;
     GLESDebugDraw* debugDraw;
 }
 

@@ -14,6 +14,8 @@
 #import "b2MapEngine.h"
 #import "b2CellFactory.h"
 #import "b2Cell.h"
+
+#import "TDeviceUtil.h"
 //#import "ScreenUtil.h"
 //#import "GLES-Render.h"
 
@@ -56,7 +58,7 @@ static b2WorldManager* _sharedb2WorldManager;
     
     if (self!=nil) {
         
-        screenUtil = [ScreenUtil sharedInstance];
+//        screenUtil = [ScreenUtil sharedInstance];
         
         treeUserDataDic = [[NSMutableDictionary alloc] init];
         
@@ -257,7 +259,7 @@ static b2WorldManager* _sharedb2WorldManager;
 - (void)moveAction{
 
 //    float factor = 10.0;
-    float screenW = [screenUtil w];
+    float screenW = [[TDeviceUtil sharedInstance] screenWidth];
     float offset = screenW/scale;
     float distanceX = pos.x-targetPos.x; 
     float distanceY = pos.y-targetPos.y;

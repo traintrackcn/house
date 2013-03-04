@@ -16,11 +16,11 @@
 #import "b2Cell.h"
 #import "CellSkinPool.h"
 
-#import "ScreenUtil.h"
 #import "CellSkin.h"
 #import "DayAndNightManager.h"
 
 //#import "ske"
+//#import "TDE"
 
 
 @interface MainLayer(){
@@ -42,8 +42,7 @@ static MainLayer* _sharedMainLayer;
     
     self = [super init];
     if (self) {
-        screenUtil = [ScreenUtil sharedInstance];
-//        self transform
+
         [self setAnchorPoint:CGPointMake(0.0, 0.0)];
         
 //        world = [b2WorldManager sharedb2World];
@@ -70,7 +69,7 @@ static MainLayer* _sharedMainLayer;
     b2MapEngine* mEngine = [b2MapEngine sharedInstance];
     [mEngine update];    
     
-    float targetX = (-pos.x*scale+[screenUtil halfW]);
+    float targetX = (-pos.x*scale+[[TDeviceUtil sharedInstance] screenWidthHalf]);
 //    float targetY = (-pos.y*scale+[screenUtil halfH]);
     float targetY = (-pos.y*scale+50.0);
 
@@ -78,7 +77,7 @@ static MainLayer* _sharedMainLayer;
     [self setPosition:CGPointMake(targetX,targetY)];
     
     
-    CGPoint bgPos = ccp(pos.x, pos.y+[screenUtil halfH]-50);
+    CGPoint bgPos = ccp(pos.x, pos.y+[[TDeviceUtil sharedInstance] screenHeightHalf]-50);
 //    CGPoint weatherPos = bgPos;
     
     if (bacground) [bacground setPosition:bgPos];
@@ -148,8 +147,8 @@ static MainLayer* _sharedMainLayer;
     float x = glLoc.x;
     float y = glLoc.y;    
 
-    float screenW = [screenUtil w];
-    float screenH = [screenUtil h];
+    float screenW = [[TDeviceUtil sharedInstance] screenWidth];
+    float screenH = [[TDeviceUtil sharedInstance] screenHeight];
     float connerOffset = 50.0;
     
   

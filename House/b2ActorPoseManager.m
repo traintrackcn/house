@@ -7,7 +7,7 @@
 //
 
 #import "b2ActorPoseManager.h"
-#import "NSObject+SBJson.h"
+
 
 
 static b2ActorPoseManager* _sharedb2ActorPoseManager;
@@ -51,9 +51,11 @@ static b2ActorPoseManager* _sharedb2ActorPoseManager;
     NSError* err;
     NSString *fPath = [[NSBundle mainBundle] pathForResource:fileKey ofType:@"json"];
     LOG_DEBUG(@"fPath-> %@",fPath);
-    NSString* jsonStr = [[NSString alloc] initWithContentsOfFile:fPath encoding:NSUTF8StringEncoding error:&err];
+//    NSString* jsonStr = [[NSString alloc] initWithContentsOfFile:fPath encoding:NSUTF8StringEncoding error:&err];
     //    NSString* str = [NSString stringWithFormat:@"{\"hello\":\"hello\"}"];
-    NSArray* frames = [[jsonStr JSONValue] objectForKey:@"data"];
+    NSData *jsonData = [[NSData alloc] initWithContentsOfFile:fPath];
+    id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+    NSArray* frames = [jsonObj objectForKey:@"data"];
     if (err) {
         LOG_DEBUG(@"err userInfo -> %@",[err userInfo]);
     }
