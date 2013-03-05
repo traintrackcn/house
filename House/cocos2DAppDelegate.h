@@ -8,15 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
-//@class CCDirector;
-@class ScreenUtil;
+
 
 @interface cocos2DAppDelegate : NSObject <UIApplicationDelegate, CCDirectorDelegate> {
-	UIWindow* window;
     CCDirector* director;
-    ScreenUtil* screenUtil;
 }
-
-@property (nonatomic, retain) UIWindow *window;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+//#import "HSMainLayer.h"
 
 @class b2ActorCore;
 @class b2WorldManager;

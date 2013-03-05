@@ -12,17 +12,14 @@
 @class b2ActorManager;
 
 @interface b2ActorCoreManager : NSObject{
-    NSMutableArray* landActorCoreList;
     NSMutableArray* staticActorCoreList;
     NSMutableArray* dynamicActorCoreList;
-    
     b2ActorManager* actorM;
 }
 
 + (b2ActorCoreManager*)sharedInstance;
 
 #pragma mark - modify core list
-- (void)landActorCoreListReplaceObjectAtIndex:(int)idx withObject:(b2ActorCore*)actorCore;
 - (void)dynamicActorCoreListReplaceObjectAtIndex:(int)idx withObject:(b2ActorCore*)actorCore;
 - (void)staticActorCoreListReplaceObjectAtIndex:(int)idx withObject:(b2ActorCore*)actorCore;
 - (void)dynamicActorCoreListExchangeObjectAtIndex:(int)realIdx withObjectAtIndex:(int)idx;
@@ -32,9 +29,6 @@
 //[landActorCoreList replaceObjectAtIndex:i withObject:actorCore];   
 
 #pragma mark -  in range /out of range operation
-
-- (void)setLandActorInRange:(int)idx;
-- (void)setLandActorOutOfRange:(int)idx;
 
 - (void)setStaticActorInRange:(int)idx;
 - (void)setStaticActorOutOfRange:(int)idx;

@@ -10,21 +10,12 @@
 
 @implementation b2ActorCore
 
-@synthesize type;
-@synthesize pos;
-@synthesize p1,p2;
-@synthesize actorId;
-@synthesize idx;
-@synthesize isDynamic;
-@synthesize angle;
-@synthesize landOffset;
-@synthesize z;
 //@synthesize changeWithLight;
 
 - (id)init{
     self = [super init];
     if (self) {
-        isDynamic = NO;
+        _isDynamic = NO;
 //        changeWithLight = YES;
     }
     return self;
@@ -35,11 +26,8 @@
 }
 
 
-
 - (void)reset{
-    
     [self setActorId:0];
-
 }
 
 @end

@@ -14,8 +14,8 @@ typedef enum{
     b2ActorCategoryPlayer = 2,
     b2ActorCategoryVehicle = 4,
     b2ActorCategoryBackground = 8,
-    b2ActorCategory2 = 16,
-    b2ActorCategory3 = 32,
+    b2ActorCategoryTrain = 16,
+    b2ActorCategoryAircraft = 32,
     b2ActorCategory4 = 64,
     b2ActorCategory5 = 128
 }b2ActorCategory;
@@ -32,12 +32,13 @@ typedef enum{
     b2ActorMask5 = -1
 }b2ActorMask;
 
-typedef enum {
-    b2ActorTypeLand = 0,
-    b2ActorTypeTree,
-    b2ActorTypePerson,
-    b2ActorTypeCar
-    //    b2ActorType
-}b2ActorType;
+//typedef enum {
+//    b2ActorTypeLand = 0,
+//    b2ActorTypeTree,
+//    b2ActorTypePerson,
+//    b2ActorTypeCar,
+//    b2ActorTypeTrain
+//    //    b2ActorType
+//}b2ActorType;
 
 #endif

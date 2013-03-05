@@ -50,9 +50,7 @@
     }
 }
 
-- (void)createProxy{
-    proxyId = [[self worldM] treeCreateProxy:[self aabb] userData:self];
-}
+
 
 #pragma mark - destory session
 

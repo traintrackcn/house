@@ -22,7 +22,7 @@
 
 
 //- (void)create:(b2Vec2)aPos withFixtureDef:(b2FixtureDef)fixtureDef;
-- (void)createProxy;
+
 
 - (void)setType:(b2BodyType)type;
 - (void)setFixtureDef:(b2FixtureDef)fixtureDef;

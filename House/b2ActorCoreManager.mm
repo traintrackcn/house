@@ -29,13 +29,11 @@ static b2ActorCoreManager* _sharedb2ActorCoreManager;
         
         actorM = [b2ActorManager sharedInstance];
         
-        landActorCoreList = [[NSMutableArray alloc] initWithCapacity:MAX_TERRAIN_KEY_COUNT];
         staticActorCoreList = [[NSMutableArray alloc] initWithCapacity:MAX_TERRAIN_KEY_COUNT];
         dynamicActorCoreList = [[NSMutableArray alloc] initWithCapacity:MAX_TERRAIN_KEY_COUNT];
         
-        //fill used slot
+        //fill used slots
         for (int i=0; i<MAX_TERRAIN_KEY_COUNT; i++) {
-            [landActorCoreList addObject:[NSNull null]];
             [staticActorCoreList addObject:[NSNull null]];
             [dynamicActorCoreList addObject:[NSNull null]];
         }       
@@ -54,10 +52,6 @@ static b2ActorCoreManager* _sharedb2ActorCoreManager;
 
 #pragma mark - modify actorCorelist elements
 
-- (void)landActorCoreListReplaceObjectAtIndex:(int)idx withObject:(b2ActorCore *)actorCore{
-    [landActorCoreList replaceObjectAtIndex:idx withObject:actorCore];
-}
-
 - (void)dynamicActorCoreListReplaceObjectAtIndex:(int)idx withObject:(b2ActorCore *)actorCore{
     [dynamicActorCoreList replaceObjectAtIndex:idx withObject:actorCore];
 }
@@ -70,28 +64,6 @@ static b2ActorCoreManager* _sharedb2ActorCoreManager;
     [dynamicActorCoreList exchangeObjectAtIndex:realIdx withObjectAtIndex:idx];
 }
 
-#pragma mark -  in range /out of range operation
-
-- (void)setLandActorInRange:(int)idx{
-    
-    b2ActorCore* core = [landActorCoreList objectAtIndex:idx];
-    //    LOG_DEBUG(@"core==null   %d",![core isEqual:[NSNull null]]);
-    if (![core isEqual:[NSNull null]]) {
-        //        LOG_DEBUG(@"create land %d in range ",idx);
-        
-        [actorM createActor:core];
-    }
-}
-
-- (void)setLandActorOutOfRange:(int)idx{
-    
-    b2ActorCore* core = [landActorCoreList objectAtIndex:idx];
-    
-    if (![core isEqual:[NSNull null]]) {
-        //        LOG_DEBUG(@"remove land %d in range ",idx);
-        [actorM removeActor:core];
-    }
-}
 
 //设定需要创建的actor id
 - (void)setStaticActorInRange:(int)idx{
@@ -109,6 +81,7 @@ static b2ActorCoreManager* _sharedb2ActorCoreManager;
     
     b2ActorCore* core = [staticActorCoreList objectAtIndex:idx];
     
+    
     if (![core isEqual:[NSNull null]]) {
         [actorM removeActor:core];
     }
@@ -116,12 +89,10 @@ static b2ActorCoreManager* _sharedb2ActorCoreManager;
 
 - (void)setDynamicActorInRange:(int)idx{
     b2ActorCore* core = [dynamicActorCoreList objectAtIndex:idx];
-    if (![core isEqual:[NSNull null]]) {
-        
-        //        LOG_DEBUG(@"create dynamic actor -> %d",[core idx]);
-        
-        [actorM createActor:core];
-    }  
+    
+    if ([core isEqual:[NSNull null]]) return;
+    [actorM createActor:core];
+    
 }
 
 - (void)setDynamicActorOutOfRange:(int)idx{

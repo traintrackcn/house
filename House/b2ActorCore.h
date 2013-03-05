@@ -15,11 +15,12 @@
 - (void)generateActorId;
 - (void)reset;
 
-@property (nonatomic, assign) int type;
-@property (nonatomic, assign) CGPoint pos;
+@property (nonatomic, assign) int catagory;
+@property (nonatomic, assign) CGPoint glPos;
 @property (nonatomic, assign) CGPoint p1,p2;
 @property (nonatomic, assign) int actorId;
-@property (nonatomic, assign) Boolean isDynamic;
+@property (nonatomic, assign) BOOL isDynamic;
+@property (nonatomic, assign) BOOL bAwake;
 @property (nonatomic, assign) int idx;
 @property (nonatomic, assign) float angle;
 @property (nonatomic, assign) int landOffset;

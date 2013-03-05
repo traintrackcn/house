@@ -12,9 +12,6 @@
 #import "b2CellFactory.h"
 #import "TIntList.h"
 #import "b2CellPool.h"
-#import "CellSkinPool.h"
-#import "CellSkin.h"
-#import "b2ActorPoseManager.h"
 #import "b2ActorCoreManager.h"
 
 
@@ -35,12 +32,10 @@
         cellIdxList = [[TIntList alloc] initWithSize:size];
         cellSkinIdxList = [[TIntList alloc] initWithSize:size];
         jointList = [[Tb2JointList alloc] initWithSize:size];
-        
-        cellSkinPool = [CellSkinPool sharedInstance];
+
         cellFactory = [b2CellFactory sharedInstance];
         cellPool = [b2CellPool sharedInstance];
-        
-        actorPoseM = [b2ActorPoseManager sharedInstance];
+    
         actorCoreM = [b2ActorCoreManager sharedInstance];
         
         poseIdx = 0;
@@ -70,28 +65,11 @@
     
 }
 
-- (void)updateCorePos{
-//    b2ActorCore* actorCore = [actor core];
-    CGPoint corePos = [core pos];
-    CGPoint realPos = [self realPos];
-    if (corePos.x!=realPos.x||corePos.y!=realPos.y){
-        
-        [core setPos:realPos];
-        
-        int realCoreIdx = roundf(corePos.x/TERRAIN_KEY_STEP);
-        int coreIdx = [core idx];
-        //            LOG_DEBUG(@"realCoreIdx -> %d  coreIdx -> %d",realCoreIdx,coreIdx);
-        if (realCoreIdx == coreIdx) return;
-        b2ActorCore* targetCore = [actorCoreM getDynamicActorCore:realCoreIdx];
-        Boolean targetCoreIsNull = [targetCore isEqual:[NSNull null]];
-        if (targetCoreIsNull) {
-            //                [dynamicActorCoreList exchangeObjectAtIndex:realCoreIdx withObjectAtIndex:coreIdx];
-            [actorCoreM dynamicActorCoreListExchangeObjectAtIndex:realCoreIdx withObjectAtIndex:coreIdx];
-            [core setIdx:realCoreIdx];
-            //                LOG_DEBUG(@"realCoreIdx -> %d  coreIdx -> %d  targetCore -> %@ newCoreIdx -> %d",realCoreIdx,coreIdx,targetCore,[actorCore idx]);
-        }
-    }
+
+- (CGPoint)glPos{
+    return CGPointMake(0.0, 0.0);
 }
+
 
 #pragma mark - properties
 
@@ -99,9 +77,6 @@
     return core;
 }
 
-- (CGPoint)realPos{
-    return [core pos];
-}
 
 - (b2Cell *)baseCell{
     return nil;
@@ -170,9 +145,7 @@
 //    b2CellPool* cellPool = [b2CellPool sharedInstance];
     [cellPool setFreeIdxList:cellIdxList];
     
-    //free cell skin
-//    CellSkinPool* cellSkinPool = [CellSkinPool sharedInstance];
-    [cellSkinPool setFreeIdxList:cellSkinIdxList];
+
     
     [cellIdxList free];
     [cellSkinIdxList free];
@@ -235,37 +208,6 @@
     return jt;
 }
 
-#pragma mark - operate skin
-
-- (void)appendCellSkin:(NSString*)key z:(int)z{
-    CellSkin* skin = [cellSkinPool pick];
-    [skin showAs:key z:z];
-    
-    [cellSkinIdxList addValue:[skin idx]];       
-}
-
-- (void)updateCellSkin:(id)skin pos:(CGPoint)aPos angle:(float)angle{
-    [skin setPosition:aPos]; 
-    [skin setRotation:angle];    
-}
-
-- (void)updateCellSkin:(CellSkin*)skin body:(b2Body *)body{
-    CGPoint bodyRealPos = [self convertToLayerPos:body->GetPosition()];
-    [skin setPosition:bodyRealPos];
-    float bodyAngle = [self convertToLayerAngle:body->GetAngle()];
-    [skin setRotation:bodyAngle];
-}
-
-- (void)updateCellSkin:(CellSkin *)skin bone:(NSArray*)bone{
-    float centerX = [[bone objectAtIndex:0] floatValue];
-    float centerY = [[bone objectAtIndex:1] floatValue];
-    float angle = [[bone objectAtIndex:2] floatValue];
-//    float radian = [[bone objectAtIndex:3] floatValue];
-    CGPoint pos = [core pos];
-    pos.y -= 5;  //减去运动部件的高度，使blender中的原点和游戏中的地面保持一致
-    [skin setPosition:ccp(centerX+pos.x,centerY+pos.y)];
-    [skin setRotation:(angle)];
-}
 
 #pragma mark - operate pose
 

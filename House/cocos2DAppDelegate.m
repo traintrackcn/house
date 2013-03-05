@@ -7,11 +7,8 @@
 //
 #import "cocos2DAppDelegate.h"
 #import "SceneManager.h"
-//#import "ScreenUtil.h"
-#import "CellSkinPool.h"
-#import "CellSkin.h"
-#import "MainLayer.h"
-#import "DayAndNightManager.h"
+#import "HSMainLayer.h"
+#import "OpenUDID.h"
 
 @interface cocos2DAppDelegate()
 
@@ -25,18 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+//    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    LOG_DEBUG(@"UDID: %@", [OpenUDID value]);
     
-     
-    
-
-    #ifdef TESTING
-        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-    #endif
-    
-//    screenUtil = [ScreenUtil sharedInstance];
-//    [screenUtil update:UIInterfaceOrientationPortrait];
-//  
     director = (CCDirectorIOS*)[CCDirector sharedDirector];
     
     [director setDelegate:self];
@@ -76,6 +64,8 @@
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGSize screenSize = screenBounds.size;
     
+//    screenBounds = CGRectMake(60.0f, -10.0f, screenBounds.size.width - 60.0f, screenBounds.size.height -240.0f);
+    
     LOG_DEBUG(@"screen size width->%f height->%f",screenSize.width,screenSize.height);    
 	
     CCGLView* glView = [CCGLView viewWithFrame:screenBounds
@@ -85,7 +75,11 @@
                                     sharegroup:nil
                                  multiSampling:NO
                                numberOfSamples:0
-                        ]; 
+                        ];
+    
+    
+    
+    
     [director setView:glView];
     [director setWantsFullScreenLayout:YES];   
     
@@ -103,27 +97,20 @@
     // Run the intro Scene
 //    LOG_DEBUG(@"director runWithScene");
     [director pushScene:scene];
-//    LOG_DEBUG(@"after runWithScene");
+    LOG_DEBUG(@"after runWithScene");
     
-    CellSkin* bgSkin = [[CellSkinPool sharedInstance] pick];
-    [bgSkin showAs:@"bg1_afternoon" z:-2];
+//    CellSkin* bgSkin = [[CellSkinPool sharedInstance] pick];
+//    [bgSkin showAs:@"bg1_afternoon" z:-2];
+    //init
+    [SceneManager sharedLayer];
     
+//    [layer setBacground:bgSkin];
     
-    
-    
-    
-    
-    MainLayer* layer = [SceneManager sharedLayer];
-    [layer setBacground:bgSkin];
-    
-    [[DayAndNightManager sharedInstance] run];
+//    [[DayAndNightManager sharedInstance] run];
     
     [window setRootViewController:director];
     [window makeKeyAndVisible];
     
-#ifdef TESTING
-    [TestFlight passCheckpoint:@"CHECKPOINT_INIT_COMPLETE"];
-#endif
     
     return YES;
 }
@@ -168,10 +155,6 @@
 }
 
 
-- (void)dealloc {
-//	[director end];
-//	[window release];
-//	[super dealloc];
-}
+
 
 @end

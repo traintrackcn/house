@@ -10,8 +10,8 @@
 #import "b2ActorCore.h"
 #import "b2WorldManager.h"
 #import "b2ActorManager.h"
-#import "b2TreeActor.h"
 #import "b2VehicleActor.h"
+#import "SceneManager.h"
 
 static b2ActorController* _sharedb2ActorController;
 
@@ -74,15 +74,19 @@ static b2ActorController* _sharedb2ActorController;
 
 - (void)focusCurrent{
 //    LOG_DEBUG(@"")
-    [[self worldM] moveTo:[[self currentActorCore] pos]];
+    [[self worldM] moveTo:[[self currentActorCore] glPos]];
 }
 
 - (void)focusNext{
-    [[self worldM] moveTo:[[self nextActorCore] pos]];
+    [[self worldM] moveTo:[[self nextActorCore] glPos]];
+    
+    LOG_DEBUG(@"focusNext");
 }
 
 - (void)focusPrevous{
-    [[self worldM] moveTo:[[self previousActorCore] pos]];
+    [[self worldM] moveTo:[[self previousActorCore] glPos]];
+    
+    LOG_DEBUG(@"focusPrevous");
 }
 
 #pragma mark - actor
@@ -120,6 +124,25 @@ static b2ActorController* _sharedb2ActorController;
 
 - (b2WorldManager*)worldM{
     return [b2WorldManager sharedInstance];
+}
+
+
+#pragma mark - HMainLayerDelegate
+
+- (void)layerTouchedTopLeft{
+//    [self focusPrevous];
+}
+
+- (void)layerTouchedTopRight{
+//    [self focusNext];
+}
+
+- (void)layerTouchedBottomLeft{
+    
+}
+
+- (void)layerTouchedBottomRight{
+    
 }
 
 @end

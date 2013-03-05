@@ -10,9 +10,7 @@
 #import "b2CellFactory.h"
 #import "b2Cell.h"
 #import "b2CellPool.h"
-
-#import "CellSkinPool.h"
-#import "CellSkin.h"
+#import "b2WorldManager.h"
 
 @implementation b2VehicleActor
 
@@ -32,7 +30,7 @@
 //    b2Cell* chassis;
     b2CellFactory* factory = [b2CellFactory sharedInstance];
 
-    CGPoint pos = [core pos];
+    CGPoint pos = [core glPos];
 //    LOG_DEBUG(@"create pos x->%f  y->%f",pos.x,pos.y);
     pos.y += 30;
     
@@ -86,27 +84,22 @@
     engine2 = (b2RevoluteJoint*)[self world]->CreateJoint(&revoluteJointDef);
     [jointList addValue:engine2];
 
-    int z = [core z];
     
-    carBodySkin = [cellSkinPool pick];
-    [carBodySkin showAs:@"car1_body" z:z];
-    [carBodySkin setPosition:pos]; 
-    [cellSkinIdxList addValue:[carBodySkin idx]];   
+//    self.aabb =  [self chassisBody]->GetFixtureList()->GetAABB(0);
+    
+//    b2AABB nilAABB;
+//    b2Fixture *fixture = body->GetFixtureList();
+//    
+//    if (fixture) {
+//        self.aabb = fixture->GetAABB(0);
+//    }
+    //Yeah every fixture has 1 to m child fixtures. For fixtures with a single child (circle, polygon, edge), the index is zero. For chain shapes, the index is 0 to m-1.
+    
 
     
-    wheel1Skin = [cellSkinPool pick];
-    [wheel1Skin showAs:@"car1_wheel" z:z];
-//    CGSize size = [skin size];
-    [wheel1Skin setPosition:wheel1Pos]; 
-    [cellSkinIdxList addValue:[wheel1Skin idx]];    
     
-    wheel2Skin = [cellSkinPool pick];
-    [wheel2Skin showAs:@"car1_wheel" z:z];
-    //    CGSize size = [skin size];
-    [wheel2Skin setPosition:wheel2Pos]; 
-    [cellSkinIdxList addValue:[wheel2Skin idx]];     
-    
-    
+//    [[HSDynamicTreeManager sharedInstance] createProxy:[self aabb] userData:nil];
+
 }
 
 - (b2Cell *)baseCell{
@@ -162,26 +155,30 @@
 }
 
 
-- (CGPoint)realPos{
-    return [self convertToLayerPos:[self chassisBody]->GetPosition()];
-}
-
 - (void)update{
-    
-    [self updateCellSkin:carBodySkin body:[self chassisBody]];
-    [self updateCellSkin:wheel1Skin body:[self wheel1Body]];
-    [self updateCellSkin:wheel2Skin body:[self wheel2Body]];
-    
-    [self updateCorePos];
+    LOG_DEBUG(@"update");
+//    [self updateCellSkin:carBodySkin body:[self chassisBody]];
+//    [self updateCellSkin:wheel1Skin body:[self wheel1Body]];
+//    [self updateCellSkin:wheel2Skin body:[self wheel2Body]];
+//    b2WorldManager *worldM = [b2WorldManager sharedInstance];
+//    CGPoint layerPos = [worldM convertToLayerPos:[self chassisBody]];   //b2Pos
+//    [core setPos:layerPos];
 }
 
+
+- (CGPoint)glPos{
+//    LOG_DEBUG(@"_worldM %@":_worldM);
+    b2WorldManager *worldM = [b2WorldManager sharedInstance];
+    CGPoint pos = [worldM convertToGLPosInWorldForB2Pos:[self chassisBody]->GetPosition()];
+    return pos;
+}
 
 - (void)lightUp{
-    [carBodySkin lightUp];
+//    [carBodySkin lightUp];
 }
 
 - (void)lightOff{
-    [carBodySkin lightOff];
+//    [carBodySkin lightOff];
 }
 
 @end

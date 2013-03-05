@@ -8,11 +8,10 @@
 
 #import "b2ActorManager.h"
 #import "b2Actor.h"
-#import "b2TreeActor.h"
+//#import "b2TreeActor.h"
 #import "b2VehicleActor.h"
 #import "b2ActorCore.h"
 #import "b2LandActor.h"
-#import "b2PersonActor.h"
 
 static b2ActorManager* _sharedb2ActorManager; 
 
@@ -47,19 +46,13 @@ static b2ActorManager* _sharedb2ActorManager;
 
     b2Actor* actor;
     
-    int type = [actorCore type];    
-    switch (type) {
-        case b2ActorTypeTree:
-            actor = [[b2TreeActor alloc] initWithCore:actorCore];
-            break;
-        case b2ActorTypeCar:
+    int catagory = [actorCore catagory];
+    switch (catagory) {
+        case b2ActorCategoryVehicle:
             actor = [[b2VehicleActor alloc] initWithCore:actorCore];
             break;
-        case b2ActorTypeLand:
+        case b2ActorCategoryLand:
             actor = [[b2LandActor alloc] initWithCore:actorCore];
-            break;
-        case b2ActorTypePerson:
-            actor = [[b2PersonActor alloc] initWithCore:actorCore];
             break;
     }
     

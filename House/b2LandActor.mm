@@ -10,8 +10,13 @@
 #import "b2CellFactory.h"
 #import "b2MapEngine.h"
 #import "b2Cell.h"
-#import "CellSkin.h"
-#import "CellSkinPool.h"
+
+@interface b2LandActor(){
+    b2AABB aabb;
+}
+
+
+@end
 
 @implementation b2LandActor
 
@@ -28,35 +33,43 @@
 
 - (void)create{
 
-    b2Cell* cell;
-    b2CellFactory* factory = [b2CellFactory sharedInstance];    
+    b2Vec2 v1,v2;
+    CGPoint p1 = [core p1];
+    CGPoint p2 = [core p2];
+    CGPoint pos = [core glPos];
+    v1.Set(p1.x/PTM_RATIO,p1.y/PTM_RATIO);
+    v2.Set(p2.x/PTM_RATIO,p2.y/PTM_RATIO);
+    
+    b2EdgeShape shape;
+    shape.Set(v1, v2);
 
-    cell = [factory createEdgeCell:[core pos] p1:[core p1] p2:[core p2] density:1.0 friction:0.3 restitution:0.0];
-    [cellIdxList addValue:[cell idx]];
-//    cell = [factory createOrientedBoxCell:[core pos] halfW:4.0 halfH:1.6 angle:[core angle] density:1.0 friction:0.3 restitution:0.0];    
-//    [cellIdxList addValue:[cell idx]];
+    b2FixtureDef fixtureDef;
+    fixtureDef.density = 1.0;
+    fixtureDef.friction = 0.3;
+    fixtureDef.restitution = 0.0;
+  
     
+    b2BodyDef bodyDef;
+    b2Body *body = [self world]->CreateBody(&bodyDef);
+    body->SetType(b2_staticBody);
     
-    
-    int landOffset = [core landOffset];
-    NSString* landKey = [NSString stringWithFormat:@"land1_%d",landOffset];
-//    LOG_DEBUG(@"landKey -> %@",landKey);
+    fixtureDef.shape = &shape;
+    body->CreateFixture(&fixtureDef);
+    body->SetTransform(b2Vec2(pos.x/PTM_RATIO,pos.y/PTM_RATIO), 0.0);
 
-    CellSkin* skin = [cellSkinPool pick];
-    [skin showAs:landKey z:[core z]];
-
+    b2AABB nilAABB;
+    b2Fixture *fixture = body->GetFixtureList();
     
-    CGSize size = [skin size];
-    CGPoint pos = [core pos];
+    if (fixture) {
+        self.aabb = fixture->GetAABB(0);
+        
+        LOG_DEBUG(@"aabb %f %f", [self aabb].upperBound.x,[self aabb].upperBound.y);
+         [[HSDynamicTreeManager sharedInstance] createProxy:[self aabb] userData:nil];
+    }
     
-    pos.x += TERRAIN_KEY_STEP_HALF;
-    pos.y -= size.height/2;
-    if(landOffset>0) pos.y += landOffset;
-    [skin setPosition:pos]; 
-//    [skin setChangeWithLight:NO];
     
-    [cellSkinIdxList addValue:[skin idx]];    
     
+//   
     
 }
 

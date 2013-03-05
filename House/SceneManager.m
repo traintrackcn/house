@@ -7,7 +7,7 @@
 //
 
 #import "SceneManager.h"
-#import "MainLayer.h"
+#import "HSMainLayer.h"
 #import "cocos2d.h"
 
 
@@ -39,7 +39,7 @@ static SceneManager *_sharedSceneManager;
 - (id)init{
     if (self = [super init]) {
         scene = [[CCScene alloc] init];    
-        layer = [[MainLayer alloc] init];
+        layer = [[HSMainLayer alloc] init];
         [layer setIsTouchEnabled:YES];
         [scene addChild:layer];
     }

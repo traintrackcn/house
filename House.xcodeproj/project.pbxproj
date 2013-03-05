@@ -14,20 +14,19 @@
 		4A066281147E4685000E5574 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A066280147E4685000E5574 /* libz.1.2.5.dylib */; };
 		4A0A77B815118BB900F33B2A /* b2VehicleActor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A0A77B715118BB900F33B2A /* b2VehicleActor.mm */; };
 		4A0C626F14C55EC800D37710 /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0C626E14C55EC800D37710 /* SceneManager.m */; };
-		4A26C12A1522DE820033F6A8 /* DayAndNightManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A26C1291522DE820033F6A8 /* DayAndNightManager.m */; };
 		4A2CF1DA1520128C007CEEAD /* TPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2CF1D91520128C007CEEAD /* TPool.m */; };
-		4A3150BD151F398900F3CFB1 /* CellSkinPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3150BC151F398900F3CFB1 /* CellSkinPool.m */; };
 		4A3317711519778600A77096 /* b2MapEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A3317701519778600A77096 /* b2MapEngine.mm */; };
 		4A85D6D6150DDFDD001F1351 /* b2Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A85D6D5150DDFDD001F1351 /* b2Cell.mm */; };
 		4A85D6D9150DF257001F1351 /* b2CellFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A85D6D8150DF257001F1351 /* b2CellFactory.mm */; };
 		4A9867D316E44D9600F3797D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9867D216E44D9600F3797D /* ImageIO.framework */; };
 		4A9867D516E44DAC00F3797D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9867D416E44DAC00F3797D /* MapKit.framework */; };
-		4A9B29011505AF66003384A0 /* MainLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B29001505AF66003384A0 /* MainLayer.mm */; };
+		4A9B29011505AF66003384A0 /* HSMainLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B29001505AF66003384A0 /* HSMainLayer.mm */; };
+		4AA333A716E5F75E00747D38 /* HSDynamicTreeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AA333A616E5F75E00747D38 /* HSDynamicTreeManager.mm */; };
+		4AA3356A16E6253C00747D38 /* b2ActorComplex.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3356916E6253B00747D38 /* b2ActorComplex.mm */; };
 		4AACC6E7152AE3E9003A0751 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AACC6E6152AE3E9003A0751 /* CFNetwork.framework */; };
 		4AACC6E9152AE417003A0751 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AACC6E8152AE417003A0751 /* MobileCoreServices.framework */; };
 		4AACC6EB152AE42C003A0751 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AACC6EA152AE42C003A0751 /* SystemConfiguration.framework */; };
 		4AACC6ED152AE461003A0751 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AACC6EC152AE461003A0751 /* libxml2.dylib */; };
-		4AACC6F1152AFB2D003A0751 /* b2ActorPoseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AACC6F0152AFB2D003A0751 /* b2ActorPoseManager.m */; };
 		4AAF7CF71519FA2200E83196 /* b2ActorCoreManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF7CF61519FA2200E83196 /* b2ActorCoreManager.mm */; };
 		4AB3C79B151C2769005C7664 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AB3C79A151C2769005C7664 /* GLES-Render.mm */; };
 		4AB3C95A151C493B005C7664 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB3C7C3151C493A005C7664 /* Default.png */; };
@@ -43,14 +42,11 @@
 		4AB3C98D151C493B005C7664 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB3C7F7151C493A005C7664 /* Icon@2x.png */; };
 		4AB3CA68151C493B005C7664 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 4AB3C8D5151C493B005C7664 /* iTunesArtwork */; };
 		4ABAB6041515DE69003EA61A /* b2ActorManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAB6031515DE69003EA61A /* b2ActorManager.mm */; };
-		4AC219CA14EA47E500F0CB4F /* CellSkinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC219C914EA47E500F0CB4F /* CellSkinManager.m */; };
-		4AC219D114EA5AA100F0CB4F /* BaseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC219D014EA5AA100F0CB4F /* BaseLayer.mm */; };
 		4AC628851518239900BB45FB /* b2ActorCore.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC628841518239900BB45FB /* b2ActorCore.mm */; };
 		4AC6288B151864FB00BB45FB /* b2ActorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6288A151864FB00BB45FB /* b2ActorController.mm */; };
 		4AC6289A15186DA600BB45FB /* b2WorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6289715186A0500BB45FB /* b2WorldManager.mm */; };
 		4AC7549E16B0F73B003EE5D4 /* liblibOpen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7549D16B0F73B003EE5D4 /* liblibOpen.a */; };
 		4AC754A016B0F73F003EE5D4 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7549F16B0F73F003EE5D4 /* libcocos2d.a */; };
-		4AC754A216B0F742003EE5D4 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC754A116B0F742003EE5D4 /* libbox2d.a */; };
 		4AC7AFD9147CDD4200E00C93 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7AFD8147CDD4200E00C93 /* UIKit.framework */; };
 		4AC7AFDB147CDD4200E00C93 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7AFDA147CDD4200E00C93 /* Foundation.framework */; };
 		4AC7AFDD147CDD4200E00C93 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7AFDC147CDD4200E00C93 /* CoreGraphics.framework */; };
@@ -58,9 +54,7 @@
 		4AC7AFE5147CDD4200E00C93 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AC7AFE3147CDD4200E00C93 /* InfoPlist.strings */; };
 		4AC7AFE7147CDD4200E00C93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7AFE6147CDD4200E00C93 /* main.m */; };
 		4AC7B028147CDF4500E00C93 /* cocos2DAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7B022147CDF4500E00C93 /* cocos2DAppDelegate.m */; };
-		4ADEC06214E500D400D00A9B /* CellSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADEC06114E500D400D00A9B /* CellSkin.m */; };
 		4ADF90D1150E237F006796AE /* b2CellPool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ADF90D0150E237F006796AE /* b2CellPool.mm */; };
-		4ADF90DF150E4F0D006796AE /* b2TreeActor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ADF90DE150E4F0D006796AE /* b2TreeActor.mm */; };
 		4ADF90E2150E4F30006796AE /* b2LandActor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ADF90E1150E4F30006796AE /* b2LandActor.mm */; };
 		4AF3D69E151036D7009BB2EC /* TIntList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF3D69D151036D7009BB2EC /* TIntList.m */; };
 		4AF3D6A4151039E1009BB2EC /* TSimpleList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF3D6A3151039E1009BB2EC /* TSimpleList.m */; };
@@ -81,7 +75,6 @@
 		4AF55957152D650B00B70099 /* bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF55955152D650B00B70099 /* bg1.png */; };
 		4AFCBA431508638E00D257A3 /* b2Actor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AFCBA421508638E00D257A3 /* b2Actor.mm */; };
 		4AFD1211152E9EF900E6246D /* person.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AFD1210152E9EF900E6246D /* person.json */; };
-		4AFE6D5F1523FED9004C6B5B /* b2PersonActor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AFE6D5E1523FED9004C6B5B /* b2PersonActor.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -491,12 +484,8 @@
 		4A0A77B715118BB900F33B2A /* b2VehicleActor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2VehicleActor.mm; sourceTree = "<group>"; };
 		4A0C626D14C55EC800D37710 /* SceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
 		4A0C626E14C55EC800D37710 /* SceneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneManager.m; sourceTree = "<group>"; };
-		4A26C1281522DE820033F6A8 /* DayAndNightManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayAndNightManager.h; sourceTree = "<group>"; };
-		4A26C1291522DE820033F6A8 /* DayAndNightManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayAndNightManager.m; sourceTree = "<group>"; };
 		4A2CF1D81520128C007CEEAD /* TPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPool.h; sourceTree = "<group>"; };
 		4A2CF1D91520128C007CEEAD /* TPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPool.m; sourceTree = "<group>"; };
-		4A3150BB151F398900F3CFB1 /* CellSkinPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSkinPool.h; sourceTree = "<group>"; };
-		4A3150BC151F398900F3CFB1 /* CellSkinPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSkinPool.m; sourceTree = "<group>"; };
 		4A33176F1519778600A77096 /* b2MapEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MapEngine.h; sourceTree = "<group>"; };
 		4A3317701519778600A77096 /* b2MapEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2MapEngine.mm; sourceTree = "<group>"; };
 		4A85D6D4150DDFDD001F1351 /* b2Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Cell.h; sourceTree = "<group>"; };
@@ -505,14 +494,16 @@
 		4A85D6D8150DF257001F1351 /* b2CellFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2CellFactory.mm; sourceTree = "<group>"; };
 		4A9867D216E44D9600F3797D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		4A9867D416E44DAC00F3797D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		4A9B28FF1505AF66003384A0 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
-		4A9B29001505AF66003384A0 /* MainLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainLayer.mm; sourceTree = "<group>"; };
+		4A9B28FF1505AF66003384A0 /* HSMainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSMainLayer.h; sourceTree = "<group>"; };
+		4A9B29001505AF66003384A0 /* HSMainLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSMainLayer.mm; sourceTree = "<group>"; };
+		4AA333A516E5F75E00747D38 /* HSDynamicTreeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSDynamicTreeManager.h; sourceTree = "<group>"; };
+		4AA333A616E5F75E00747D38 /* HSDynamicTreeManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSDynamicTreeManager.mm; sourceTree = "<group>"; };
+		4AA3356816E6253B00747D38 /* b2ActorComplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorComplex.h; sourceTree = "<group>"; };
+		4AA3356916E6253B00747D38 /* b2ActorComplex.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2ActorComplex.mm; sourceTree = "<group>"; };
 		4AACC6E6152AE3E9003A0751 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4AACC6E8152AE417003A0751 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		4AACC6EA152AE42C003A0751 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4AACC6EC152AE461003A0751 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		4AACC6EF152AFB2D003A0751 /* b2ActorPoseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorPoseManager.h; sourceTree = "<group>"; };
-		4AACC6F0152AFB2D003A0751 /* b2ActorPoseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = b2ActorPoseManager.m; sourceTree = "<group>"; };
 		4AAF7CF51519FA2200E83196 /* b2ActorCoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorCoreManager.h; sourceTree = "<group>"; };
 		4AAF7CF61519FA2200E83196 /* b2ActorCoreManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2ActorCoreManager.mm; sourceTree = "<group>"; };
 		4AB3C799151C2769005C7664 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
@@ -531,10 +522,6 @@
 		4AB3C8D5151C493B005C7664 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		4ABAB6021515DE69003EA61A /* b2ActorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorManager.h; sourceTree = "<group>"; };
 		4ABAB6031515DE69003EA61A /* b2ActorManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2ActorManager.mm; sourceTree = "<group>"; };
-		4AC219C814EA47E500F0CB4F /* CellSkinManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSkinManager.h; sourceTree = "<group>"; };
-		4AC219C914EA47E500F0CB4F /* CellSkinManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSkinManager.m; sourceTree = "<group>"; };
-		4AC219CF14EA5AA100F0CB4F /* BaseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseLayer.h; sourceTree = "<group>"; };
-		4AC219D014EA5AA100F0CB4F /* BaseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseLayer.mm; sourceTree = "<group>"; };
 		4AC628831518239900BB45FB /* b2ActorCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorCore.h; sourceTree = "<group>"; };
 		4AC628841518239900BB45FB /* b2ActorCore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2ActorCore.mm; sourceTree = "<group>"; };
 		4AC62889151864FA00BB45FB /* b2ActorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2ActorController.h; sourceTree = "<group>"; };
@@ -556,12 +543,8 @@
 		4AC7AFF5147CDD4200E00C93 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4AC7B021147CDF4500E00C93 /* cocos2DAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2DAppDelegate.h; sourceTree = "<group>"; };
 		4AC7B022147CDF4500E00C93 /* cocos2DAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2DAppDelegate.m; sourceTree = "<group>"; };
-		4ADEC06014E500D400D00A9B /* CellSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSkin.h; sourceTree = "<group>"; };
-		4ADEC06114E500D400D00A9B /* CellSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSkin.m; sourceTree = "<group>"; };
 		4ADF90CF150E237F006796AE /* b2CellPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2CellPool.h; sourceTree = "<group>"; };
 		4ADF90D0150E237F006796AE /* b2CellPool.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2CellPool.mm; sourceTree = "<group>"; };
-		4ADF90DD150E4F0C006796AE /* b2TreeActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2TreeActor.h; sourceTree = "<group>"; };
-		4ADF90DE150E4F0D006796AE /* b2TreeActor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2TreeActor.mm; sourceTree = "<group>"; };
 		4ADF90E0150E4F30006796AE /* b2LandActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2LandActor.h; sourceTree = "<group>"; };
 		4ADF90E1150E4F30006796AE /* b2LandActor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2LandActor.mm; sourceTree = "<group>"; };
 		4AF3D69C151036D7009BB2EC /* TIntList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIntList.h; sourceTree = "<group>"; };
@@ -590,8 +573,6 @@
 		4AFCBA411508638E00D257A3 /* b2Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Actor.h; sourceTree = "<group>"; };
 		4AFCBA421508638E00D257A3 /* b2Actor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2Actor.mm; sourceTree = "<group>"; };
 		4AFD1210152E9EF900E6246D /* person.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = person.json; sourceTree = "<group>"; };
-		4AFE6D5D1523FED9004C6B5B /* b2PersonActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2PersonActor.h; sourceTree = "<group>"; };
-		4AFE6D5E1523FED9004C6B5B /* b2PersonActor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2PersonActor.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -601,7 +582,6 @@
 			files = (
 				4A9867D516E44DAC00F3797D /* MapKit.framework in Frameworks */,
 				4A9867D316E44D9600F3797D /* ImageIO.framework in Frameworks */,
-				4AC754A216B0F742003EE5D4 /* libbox2d.a in Frameworks */,
 				4AC754A016B0F73F003EE5D4 /* libcocos2d.a in Frameworks */,
 				4AC7549E16B0F73B003EE5D4 /* liblibOpen.a in Frameworks */,
 				4AACC6ED152AE461003A0751 /* libxml2.dylib in Frameworks */,
@@ -704,42 +684,41 @@
 			path = House;
 			sourceTree = "<group>";
 		};
-		4A242000150F0CD500B32B82 /* actor */ = {
+		4A242000150F0CD500B32B82 /* Actors */ = {
 			isa = PBXGroup;
 			children = (
-				4ADF90DD150E4F0C006796AE /* b2TreeActor.h */,
-				4ADF90DE150E4F0D006796AE /* b2TreeActor.mm */,
+				4AF3D6C615108E28009BB2EC /* b2ActorEnum.h */,
 				4ADF90E0150E4F30006796AE /* b2LandActor.h */,
 				4ADF90E1150E4F30006796AE /* b2LandActor.mm */,
 				4AFCBA411508638E00D257A3 /* b2Actor.h */,
 				4AFCBA421508638E00D257A3 /* b2Actor.mm */,
-				4AF3D6C615108E28009BB2EC /* b2ActorEnum.h */,
 				4A0A77B615118BB800F33B2A /* b2VehicleActor.h */,
 				4A0A77B715118BB900F33B2A /* b2VehicleActor.mm */,
-				4A85D6D4150DDFDD001F1351 /* b2Cell.h */,
-				4A85D6D5150DDFDD001F1351 /* b2Cell.mm */,
 				4AC628831518239900BB45FB /* b2ActorCore.h */,
 				4AC628841518239900BB45FB /* b2ActorCore.mm */,
 				4AC62889151864FA00BB45FB /* b2ActorController.h */,
 				4AC6288A151864FB00BB45FB /* b2ActorController.mm */,
-				4AC6289615186A0500BB45FB /* b2WorldManager.h */,
-				4AC6289715186A0500BB45FB /* b2WorldManager.mm */,
 				4ABAB6021515DE69003EA61A /* b2ActorManager.h */,
 				4ABAB6031515DE69003EA61A /* b2ActorManager.mm */,
-				4AACC6EF152AFB2D003A0751 /* b2ActorPoseManager.h */,
-				4AACC6F0152AFB2D003A0751 /* b2ActorPoseManager.m */,
+				4AAF7CF51519FA2200E83196 /* b2ActorCoreManager.h */,
+				4AAF7CF61519FA2200E83196 /* b2ActorCoreManager.mm */,
+				4AA3356816E6253B00747D38 /* b2ActorComplex.h */,
+				4AA3356916E6253B00747D38 /* b2ActorComplex.mm */,
+			);
+			name = Actors;
+			sourceTree = "<group>";
+		};
+		4A98681016E490F400F3797D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4A85D6D4150DDFDD001F1351 /* b2Cell.h */,
+				4A85D6D5150DDFDD001F1351 /* b2Cell.mm */,
 				4A85D6D7150DF257001F1351 /* b2CellFactory.h */,
 				4A85D6D8150DF257001F1351 /* b2CellFactory.mm */,
 				4ADF90CF150E237F006796AE /* b2CellPool.h */,
 				4ADF90D0150E237F006796AE /* b2CellPool.mm */,
-				4A33176F1519778600A77096 /* b2MapEngine.h */,
-				4A3317701519778600A77096 /* b2MapEngine.mm */,
-				4AAF7CF51519FA2200E83196 /* b2ActorCoreManager.h */,
-				4AAF7CF61519FA2200E83196 /* b2ActorCoreManager.mm */,
-				4AFE6D5D1523FED9004C6B5B /* b2PersonActor.h */,
-				4AFE6D5E1523FED9004C6B5B /* b2PersonActor.mm */,
 			);
-			name = actor;
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		4AB3C79C151C4928005C7664 /* cocos2d */ = {
@@ -777,7 +756,7 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		4AC219CB14EA48E300F0CB4F /* utils */ = {
+		4AC219CB14EA48E300F0CB4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				4AF3D6B315103E1F009BB2EC /* Tb2VecList.h */,
@@ -793,7 +772,7 @@
 				4A2CF1D81520128C007CEEAD /* TPool.h */,
 				4A2CF1D91520128C007CEEAD /* TPool.m */,
 			);
-			name = utils;
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		4AC67BE8152A9DD500174655 /* image */ = {
@@ -818,8 +797,6 @@
 		4AC7AFC9147CDD4200E00C93 = {
 			isa = PBXGroup;
 			children = (
-				4A9867D416E44DAC00F3797D /* MapKit.framework */,
-				4A9867D216E44D9600F3797D /* ImageIO.framework */,
 				4AC7AFE0147CDD4200E00C93 /* House */,
 				4A11018814C56C5800F3B736 /* Resources */,
 				4AC7AFD7147CDD4200E00C93 /* Frameworks */,
@@ -843,6 +820,8 @@
 				4AC754A116B0F742003EE5D4 /* libbox2d.a */,
 				4AC7549F16B0F73F003EE5D4 /* libcocos2d.a */,
 				4AC7549D16B0F73B003EE5D4 /* liblibOpen.a */,
+				4A9867D416E44DAC00F3797D /* MapKit.framework */,
+				4A9867D216E44D9600F3797D /* ImageIO.framework */,
 				4AACC6EA152AE42C003A0751 /* SystemConfiguration.framework */,
 				4AACC6E8152AE417003A0751 /* MobileCoreServices.framework */,
 				4AACC6E6152AE3E9003A0751 /* CFNetwork.framework */,
@@ -866,12 +845,10 @@
 		4AC7AFE0147CDD4200E00C93 /* House */ = {
 			isa = PBXGroup;
 			children = (
-				4A242000150F0CD500B32B82 /* actor */,
-				4ACEA9C114FF59D80094248C /* skin */,
-				4AC219CB14EA48E300F0CB4F /* utils */,
-				4ADEC07B14E50E3400D00A9B /* manager */,
-				4ADEC07414E5067200D00A9B /* model */,
-				4ADEC05F14E5009000D00A9B /* view */,
+				4A98681016E490F400F3797D /* Cells */,
+				4A242000150F0CD500B32B82 /* Actors */,
+				4AC219CB14EA48E300F0CB4F /* Utils */,
+				4ADEC07B14E50E3400D00A9B /* Base */,
 				4AC7AFE1147CDD4200E00C93 /* Supporting Files */,
 			);
 			path = House;
@@ -890,46 +867,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4ACEA9C114FF59D80094248C /* skin */ = {
+		4ADEC07B14E50E3400D00A9B /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				4ADEC06014E500D400D00A9B /* CellSkin.h */,
-				4ADEC06114E500D400D00A9B /* CellSkin.m */,
-				4AC219C814EA47E500F0CB4F /* CellSkinManager.h */,
-				4AC219C914EA47E500F0CB4F /* CellSkinManager.m */,
-				4A3150BB151F398900F3CFB1 /* CellSkinPool.h */,
-				4A3150BC151F398900F3CFB1 /* CellSkinPool.m */,
-			);
-			name = skin;
-			sourceTree = "<group>";
-		};
-		4ADEC05F14E5009000D00A9B /* view */ = {
-			isa = PBXGroup;
-			children = (
-				4AC219CF14EA5AA100F0CB4F /* BaseLayer.h */,
-				4AC219D014EA5AA100F0CB4F /* BaseLayer.mm */,
-				4A9B28FF1505AF66003384A0 /* MainLayer.h */,
-				4A9B29001505AF66003384A0 /* MainLayer.mm */,
-			);
-			name = view;
-			sourceTree = "<group>";
-		};
-		4ADEC07414E5067200D00A9B /* model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = model;
-			sourceTree = "<group>";
-		};
-		4ADEC07B14E50E3400D00A9B /* manager */ = {
-			isa = PBXGroup;
-			children = (
+				4A33176F1519778600A77096 /* b2MapEngine.h */,
+				4A3317701519778600A77096 /* b2MapEngine.mm */,
+				4AC6289615186A0500BB45FB /* b2WorldManager.h */,
+				4AC6289715186A0500BB45FB /* b2WorldManager.mm */,
 				4A0C626D14C55EC800D37710 /* SceneManager.h */,
 				4A0C626E14C55EC800D37710 /* SceneManager.m */,
-				4A26C1281522DE820033F6A8 /* DayAndNightManager.h */,
-				4A26C1291522DE820033F6A8 /* DayAndNightManager.m */,
+				4A9B28FF1505AF66003384A0 /* HSMainLayer.h */,
+				4A9B29001505AF66003384A0 /* HSMainLayer.mm */,
+				4AA333A516E5F75E00747D38 /* HSDynamicTreeManager.h */,
+				4AA333A616E5F75E00747D38 /* HSDynamicTreeManager.mm */,
 			);
-			name = manager;
+			name = Base;
 			sourceTree = "<group>";
 		};
 		4AFD120D152E9ECB00E6246D /* pose */ = {
@@ -1436,15 +1388,11 @@
 				4AC7AFE7147CDD4200E00C93 /* main.m in Sources */,
 				4AC7B028147CDF4500E00C93 /* cocos2DAppDelegate.m in Sources */,
 				4A0C626F14C55EC800D37710 /* SceneManager.m in Sources */,
-				4ADEC06214E500D400D00A9B /* CellSkin.m in Sources */,
-				4AC219CA14EA47E500F0CB4F /* CellSkinManager.m in Sources */,
-				4AC219D114EA5AA100F0CB4F /* BaseLayer.mm in Sources */,
-				4A9B29011505AF66003384A0 /* MainLayer.mm in Sources */,
+				4A9B29011505AF66003384A0 /* HSMainLayer.mm in Sources */,
 				4AFCBA431508638E00D257A3 /* b2Actor.mm in Sources */,
 				4A85D6D6150DDFDD001F1351 /* b2Cell.mm in Sources */,
 				4A85D6D9150DF257001F1351 /* b2CellFactory.mm in Sources */,
 				4ADF90D1150E237F006796AE /* b2CellPool.mm in Sources */,
-				4ADF90DF150E4F0D006796AE /* b2TreeActor.mm in Sources */,
 				4ADF90E2150E4F30006796AE /* b2LandActor.mm in Sources */,
 				4AF3D69E151036D7009BB2EC /* TIntList.m in Sources */,
 				4AF3D6A4151039E1009BB2EC /* TSimpleList.m in Sources */,
@@ -1458,11 +1406,9 @@
 				4A3317711519778600A77096 /* b2MapEngine.mm in Sources */,
 				4AAF7CF71519FA2200E83196 /* b2ActorCoreManager.mm in Sources */,
 				4AB3C79B151C2769005C7664 /* GLES-Render.mm in Sources */,
-				4A3150BD151F398900F3CFB1 /* CellSkinPool.m in Sources */,
 				4A2CF1DA1520128C007CEEAD /* TPool.m in Sources */,
-				4A26C12A1522DE820033F6A8 /* DayAndNightManager.m in Sources */,
-				4AFE6D5F1523FED9004C6B5B /* b2PersonActor.mm in Sources */,
-				4AACC6F1152AFB2D003A0751 /* b2ActorPoseManager.m in Sources */,
+				4AA333A716E5F75E00747D38 /* HSDynamicTreeManager.mm in Sources */,
+				4AA3356A16E6253C00747D38 /* b2ActorComplex.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

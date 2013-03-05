@@ -81,6 +81,7 @@ static b2CellFactory *_sharedB2CellFactory;
     fixtureDef.shape = shape;
     [cell setFixtureDef:fixtureDef];
     [cell setPos:aPos];
+    
     return cell;
 }
 
