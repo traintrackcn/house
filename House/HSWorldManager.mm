@@ -6,23 +6,21 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "b2WorldManager.h"
-#import "b2ActorManager.h"
-#import "b2ActorController.h"
+#import "HSWorldManager.h"
+#import "HSActorManager.h"
+#import "HSActorController.h"
 #import "cocos2d.h"
-#import "b2Actor.h"
-#import "b2MapEngine.h"
-#import "b2CellFactory.h"
-#import "b2Cell.h"
-
 #import "TDeviceUtil.h"
 #import "HSDynamicTreeManager.h"
+#import "HSActorBase.h"
 
 
-static b2WorldManager* _sharedb2WorldManager;
 
 
-@interface b2WorldManager(){
+static HSWorldManager* _sharedb2WorldManager;
+
+
+@interface HSWorldManager(){
     float screenW;
     float screenH;
 //    float screenWHalf;
@@ -40,11 +38,11 @@ static b2WorldManager* _sharedb2WorldManager;
 @end
 
 
-@implementation b2WorldManager
+@implementation HSWorldManager
 
 
 
-+ (b2WorldManager *)sharedInstance{
++ (HSWorldManager *)sharedInstance{
 	if (!_sharedb2WorldManager) {
         _sharedb2WorldManager = [[self alloc] init];
 	}
@@ -53,7 +51,7 @@ static b2WorldManager* _sharedb2WorldManager;
 }
 
 + (b2World *)sharedb2World{
-    return [[b2WorldManager sharedInstance] world];
+    return [[HSWorldManager sharedInstance] world];
 }
 
 - (id)init{
@@ -89,38 +87,15 @@ static b2WorldManager* _sharedb2WorldManager;
     world = new b2World(gravity);
     world->SetAllowSleeping(bAllowSleeping);
     
-//    world->setde
+//    world->SetAutoClearForces( worldValue["autoClearForces"].asBool() );
+//    world->SetWarmStarting( worldValue["warmStarting"].asBool() );
+//    world->SetContinuousPhysics( worldValue["continuousPhysics"].asBool() );
+//    world->SetSubStepping( worldValue["subStepping"].asBool() );
     
-//    world->SetContinuousPhysics(true);
-//    [self setPos:b2Vec2(0.0,55.0)];
+    
+
 }
 
-
-
-
-
-#pragma mark - convert position
-
-//- (CGPoint)convertTo
-
-- (CGPoint)convertToGLPosInWorldForB2Pos:(b2Vec2)b2Pos{
-//    b2Vec2 v = body->GetPosition();
-    //    body->SetLinearVelocity(b2Vec2(1.0,0.0));
-    
-//    LOG_DEBUG(@"convertToGLPosInWorldForB2Pos b2Pos x:%f y:%f", b2Pos.x, b2Pos.y);
-    
-    float x = b2Pos.x*PTM_RATIO;
-    float y = b2Pos.y*PTM_RATIO;
-    return CGPointMake(x, y);
-}
-
-- (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld{
-//    b2WorldManager* worldM = [b2WorldManager sharedInstance];
-    float scale = _scale;
-    b2Vec2 b2PosClickedInWorld = b2Vec2(((glPosClickedInWorld.x)/scale)/PTM_RATIO, ((glPosClickedInWorld.y)/scale)/PTM_RATIO);
-    LOG_DEBUG(@"b2LocClickedInWorld -> x %f y%f  ",b2PosClickedInWorld.x,b2PosClickedInWorld.y);
-    return b2PosClickedInWorld;
-}
 
 
 
@@ -164,6 +139,22 @@ static b2WorldManager* _sharedb2WorldManager;
 
 }
 
+- (void)moveByFocusedActor{
+    
+    HSActorController* actorC = [HSActorController sharedInstance];
+    HSActorBase* actor = [actorC focusedActor];
+
+    
+    //    CGPoint pos = CGPointMake(0.0, 0.0);
+    
+    //    LOG_DEBUG(@"actor -> %@  pos: %f %f", actor, pos.x ,pos.y);
+    
+    if (actor) {
+        CGPoint pos = [actor glPos];
+        [self moveTo:CGPointMake(roundf(pos.x),roundf(pos.y))];
+    }
+}
+
 #pragma mark - draw fn
 
 
@@ -182,7 +173,7 @@ static b2WorldManager* _sharedb2WorldManager;
         debugDraw->SetFlags(flags);
         world->SetDebugDraw(debugDraw);      
         debugDraw->SetRatio(PTM_RATIO);
-        LOG_DEBUG(@"create debugDraw");
+//        LOG_DEBUG(@"create debugDraw");
     }
     
     
@@ -274,39 +265,44 @@ static b2WorldManager* _sharedb2WorldManager;
 //     [self moveTo:CGPointMake(roundf(corePos.x),roundf(corePos.y))];
 //}
 
-- (void)moveByFocusedActor{
-    b2ActorController* actorC = [b2ActorController sharedInstance];
-    b2Actor* actor = [actorC currentActor];
-    CGPoint pos = [actor glPos];
+
+#pragma mark - convert position
+
+//- (CGPoint)convertTo
+
+- (CGPoint)convertToGLPosInWorldForB2Pos:(b2Vec2)b2Pos{
+    //    b2Vec2 v = body->GetPosition();
+    //    body->SetLinearVelocity(b2Vec2(1.0,0.0));
     
-//    LOG_DEBUG(@"actor -> %@  pos: %f %f", actor, pos.x ,pos.y);
+    //    LOG_DEBUG(@"convertToGLPosInWorldForB2Pos b2Pos x:%f y:%f", b2Pos.x, b2Pos.y);
     
-    if (actor) {
-        [self moveTo:CGPointMake(roundf(pos.x),roundf(pos.y))];
-    }
+    float x = b2Pos.x*PTM_RATIO;
+    float y = b2Pos.y*PTM_RATIO;
+    return CGPointMake(x, y);
 }
 
-- (void)moveByFocusedActorCore{
-    
-    b2ActorController* actorC = [b2ActorController sharedInstance];
-    b2ActorCore* focusedActorCore = [actorC currentActorCore];
-//    b2MapEngine* mEngine = [b2MapEngine sharedInstance];
-    
-    if (!focusedActorCore) {
-        return;
-    }
-    
-    CGPoint corePos = [focusedActorCore glPos];
-//    LOG_DEBUG(@"focusedActorCore actorId -> %d  pos x -> %f  y -> %f",[focusedActorCore actorId],corePos.x,corePos.y);
-    
-    if (focusedActorCore) {
-        [self moveTo:CGPointMake(roundf(corePos.x),roundf(corePos.y))];
-    }   
-    
-//    LOG_DEBUG(@"moveByFocusedActorCore end ============================================");
+- (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld{
+    //    b2WorldManager* worldM = [b2WorldManager sharedInstance];
+    float scale = _scale;
+    b2Vec2 b2PosClickedInWorld = b2Vec2(((glPosClickedInWorld.x)/scale)/PTM_RATIO, ((glPosClickedInWorld.y)/scale)/PTM_RATIO);
+    LOG_DEBUG(@"b2LocClickedInWorld -> x %f y%f  ",b2PosClickedInWorld.x,b2PosClickedInWorld.y);
+    return b2PosClickedInWorld;
 }
 
 
+- (CGPoint)convertToLayerPos:(b2Vec2)v{
+    return CGPointMake(v.x*PTM_RATIO, v.y*PTM_RATIO);
+}
+
+
+
+- (float)convertToLayerAngle:(float)radian{
+    return (radian/-M_PI)*180;
+}
+
+- (float)convertTob2Radian:(float)angle{
+    return (angle*-M_PI)/180;
+}
 
 
 

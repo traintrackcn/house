@@ -16,11 +16,11 @@
 
 
 
-@interface b2WorldManager :NSObject{
+@interface HSWorldManager :NSObject{
     
 }
 
-+ (b2WorldManager*)sharedInstance;
++ (HSWorldManager*)sharedInstance;
 
 + (b2World*)sharedb2World;
 
@@ -30,20 +30,22 @@
 - (void)step:(float)delta;
 - (void)drawDebugData;
 
-
-
-
 - (void)zoomTo:(float)aScale;
 - (void)moveTo:(CGPoint)aPos;
 
-- (CGPoint)convertToGLPosInWorldForB2Pos:(b2Vec2)b2Pos;
-- (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld;
-
-
 @property(nonatomic, assign) CGPoint pos;
 @property(nonatomic, assign) float scale;
-
 @property(nonatomic, assign) BOOL showDebugDraw;
+
+#pragma mark - convert values
+
+- (CGPoint)convertToGLPosInWorldForB2Pos:(b2Vec2)b2Pos;
+- (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld;
+- (float)convertToLayerAngle:(float)radian;
+- (float)convertTob2Radian:(float)angle;
+
+
+
 
 
 @end

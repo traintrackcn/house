@@ -7,13 +7,11 @@
 //
 
 #import "HSMainLayer.h"
-#import "b2WorldManager.h"
-#import "b2ActorController.h"
-#import "b2VehicleActor.h"
-#import "b2MapEngine.h"
-
-#import "b2CellFactory.h"
-#import "b2Cell.h"
+#import "HSWorldManager.h"
+#import "HSActorController.h"
+#import "HSMapEngine.h"
+#import "BOX2D.h"
+#import "HSActorBase.h"
 
 
 //#import "ske"
@@ -43,9 +41,8 @@
         [self scheduleUpdate];
 
         [self setAnchorPoint:CGPointMake(0.0, 0.0)];
-        
-//        world = [b2WorldManager sharedb2World];
-        [b2MapEngine sharedInstance];
+
+        [HSMapEngine sharedInstance];
         
     }
     return self;
@@ -56,7 +53,7 @@
 
 - (void)update:(ccTime)delta{
     
-    b2WorldManager *worldM = [b2WorldManager sharedInstance];
+    HSWorldManager *worldM = [HSWorldManager sharedInstance];
     CGPoint pos = [worldM pos];
     float scale = [worldM scale];
     
@@ -75,7 +72,7 @@
 
 -(void)draw{
 //    [super draw];
-    b2WorldManager* worldM = [b2WorldManager sharedInstance];
+    HSWorldManager* worldM = [HSWorldManager sharedInstance];
     
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	kmGLPushMatrix();
@@ -99,7 +96,7 @@
     CGPoint glPosOnScreen = [[CCDirector sharedDirector] convertToGL:vPosOnScreen];
     CGPoint layerPos = [self position];
     CGPoint glPosClickedInWorld = CGPointMake(glPosOnScreen.x-layerPos.x, glPosOnScreen.y-layerPos.y);
-    b2WorldManager* worldM = [b2WorldManager sharedInstance];
+    HSWorldManager* worldM = [HSWorldManager sharedInstance];
     
     LOG_DEBUG(@"vPosOnScreen -> x %f y %f",vPosOnScreen.x,vPosOnScreen.y);
     LOG_DEBUG(@"glPosOnScreen -> x %f y %f", glPosOnScreen.x,glPosOnScreen.y);
@@ -149,17 +146,17 @@
     CGFloat glXOnScreen = glPosOnScreen.x;
     CGFloat glYOnScreen = glPosOnScreen.y;
     
-    b2ActorController* actorC = [b2ActorController sharedInstance];
+    HSActorController* actorC = [HSActorController sharedInstance];
     float screenW = [[TDeviceUtil sharedInstance] screenWidth];
     float screenH = [[TDeviceUtil sharedInstance] screenHeight];
     float connerOffset = 50.0;
     if (glYOnScreen>(screenH-connerOffset)) { //上80.0屏幕
         //        LOG_DEBUG(@"上屏幕");
         if (glXOnScreen<connerOffset){ //左
-            [actorC focusPrevous];
+//            [actorC focusPrevous];
             return;
         }else if(glXOnScreen>(screenW-connerOffset)){ //右
-            [actorC focusNext];
+//            [actorC focusNext];
             return;
         }
     }else if(glYOnScreen<connerOffset){ //下半屏幕
@@ -176,8 +173,17 @@
 #pragma mark - operate mouse joint
 
 - (void)startDragMouseJointWithB2PosClickedInWorld:(b2Vec2) b2PosClickedInWorld{
-    b2ActorController* actorC = [b2ActorController sharedInstance];
-    b2Body* body = [[[actorC currentActor] baseCell] body];
+    
+    
+//    return;
+//    b2ActorController* actorC = [b2ActorController sharedInstance];
+    b2Body* body = [[[HSActorController sharedInstance] focusedActor] b2Bodyy];
+//    b2Body* body;
+    
+    if (body == NULL) {
+        return;
+    }
+    
     b2Vec2 b2LocTarget = body->GetPosition();
     LOG_DEBUG(@"b2LocTarget x%f y %f",b2LocTarget.x,b2LocTarget.y);
     
@@ -186,21 +192,29 @@
         return;
     }
     
-    if (body->GetFixtureList()->TestPoint(b2PosClickedInWorld)) {
-        b2World* world = [b2WorldManager sharedb2World];
-        b2BodyDef bodyDef;
-        b2Body* tempBody = world->CreateBody(&bodyDef);
+    b2Fixture *fixture = body->GetFixtureList();
+    
+    while (fixture) {
+        if (fixture->TestPoint(b2PosClickedInWorld)) {
+            b2World* world = [HSWorldManager sharedb2World];
+            b2BodyDef bodyDef;
+            b2Body* tempBody = world->CreateBody(&bodyDef);
+            
+            b2MouseJointDef md;
+        //        md.dampingRatio = 0.0f;
+            md.bodyA = tempBody;
+            md.bodyB = body;
+            md.target = b2PosClickedInWorld;
+            md.collideConnected = NO;
+            md.maxForce = 100000000.0f ;
+        //        md.frequencyHz = 60;
+            
+            mouseJoint =  (b2MouseJoint*) world->CreateJoint(&md);
+            
+            break;
+        }
         
-        b2MouseJointDef md;
-//        md.dampingRatio = 0.0f;
-        md.bodyA = tempBody;
-        md.bodyB = body;
-        md.target = b2PosClickedInWorld;
-        md.collideConnected = NO;
-        md.maxForce = 100000000.0f ;
-//        md.frequencyHz = 60;
-        
-        mouseJoint =  (b2MouseJoint*) world->CreateJoint(&md);
+        fixture = fixture->GetNext();
     }
 }
 
@@ -208,7 +222,7 @@
     if (mouseJoint) {
         CGPoint glPos = [[CCDirector sharedDirector] convertToGL:location];
         CGPoint layerPos = [self position];
-        b2WorldManager* worldM = [b2WorldManager sharedInstance];
+        HSWorldManager* worldM = [HSWorldManager sharedInstance];
         float scale = [worldM scale];
         CGPoint glPosInLayer = CGPointMake((glPos.x-layerPos.x)/scale, (glPos.y-layerPos.y)/scale);
         
@@ -220,7 +234,7 @@
 
 - (void)endDragMouseJoint{
     if (mouseJoint) {
-        b2World* world = [b2WorldManager sharedb2World];
+        b2World* world = [HSWorldManager sharedb2World];
         world->DestroyJoint(mouseJoint);
         mouseJoint = NULL;
     }    
@@ -229,7 +243,7 @@
 
 
 - (void)doZoom{
-    b2WorldManager* worldM = [b2WorldManager sharedInstance];
+    HSWorldManager* worldM = [HSWorldManager sharedInstance];
 
     if ([worldM scale]==1.0) {
         [worldM zoomTo:0.5];

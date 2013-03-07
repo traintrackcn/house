@@ -11,16 +11,15 @@
 #import "TIntList.h"
 #import "Tb2VecList.h"
 #import "TFloatList.h"
-#import "b2ActorEnum.h"
 
 
 
-@interface b2MapEngine : NSObject{ 
+@interface HSMapEngine : NSObject{
     
 }
   
 
-+ (b2MapEngine*)sharedInstance;
++ (HSMapEngine*)sharedInstance;
 
 
 

@@ -6,8 +6,9 @@
 //  Copyright __MyCompanyName__ 2011年. All rights reserved.
 //
 #import "cocos2DAppDelegate.h"
-#import "SceneManager.h"
+#import "HSSceneManager.h"
 #import "HSMainLayer.h"
+#import "HSActorDescriptionManager.h"
 #import "OpenUDID.h"
 
 @interface cocos2DAppDelegate()
@@ -23,7 +24,8 @@
 {
     
 //    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-    LOG_DEBUG(@"UDID: %@", [OpenUDID value]);
+//    LOG_DEBUG(@"UDID: %@", [OpenUDID value]);
+    [self initializeExceptionHandler];
     
     director = (CCDirectorIOS*)[CCDirector sharedDirector];
     
@@ -92,8 +94,10 @@
     [CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
 //    ccp(10, 10);
+    
+    [HSActorDescriptionManager sharedInstance];
 
-    CCScene *scene = [SceneManager sharedScene];
+    CCScene *scene = [HSSceneManager sharedScene];
     // Run the intro Scene
 //    LOG_DEBUG(@"director runWithScene");
     [director pushScene:scene];
@@ -102,7 +106,7 @@
 //    CellSkin* bgSkin = [[CellSkinPool sharedInstance] pick];
 //    [bgSkin showAs:@"bg1_afternoon" z:-2];
     //init
-    [SceneManager sharedLayer];
+    [HSSceneManager sharedLayer];
     
 //    [layer setBacground:bgSkin];
     
@@ -152,6 +156,43 @@
     LOG_DEBUG(@"interfaceOrientation -> %d",interfaceOrientation);
 //    [screenUtil update:interfaceOrientation];
     return YES;
+}
+
+
+
+#pragma mark - testflight & handle exceptions
+
+- (void)initializeExceptionHandler{
+    
+    NSSetUncaughtExceptionHandler(&handleExceptions);
+    
+    struct sigaction signalAction;
+    // initialize the signal action structure
+    memset(&signalAction, 0, sizeof(signalAction));
+    // set SignalHandler as the handler in the signal action structure
+    signalAction.sa_handler = &handleSignal;
+    // set SignalHandler as the handlers for SIGABRT, SIGILL and SIGBUS
+    sigaction(SIGABRT, &signalAction, NULL);
+    sigaction(SIGILL, &signalAction, NULL);
+    sigaction(SIGBUS, &signalAction, NULL);
+    
+    //    [[DSTestFlightUtil sharedInstance] takeOff];
+    //    [[DSTestFlightUtil sharedInstance] passCheckPointAppLaunching];
+}
+
+/*
+ My Apps Custom uncaught exception catcher, we do special stuff here, and TestFlight takes care of the rest
+ */
+void handleExceptions(NSException *exception) {
+    LOG_DEBUG(@"This is where we save the application data during a exception\nreason%@",[exception reason]);
+    // Save application data on crash
+}
+/*
+ My Apps Custom signal catcher, we do special stuff here, and TestFlight takes care of the rest
+ */
+void handleSignal(int sig) {
+    LOG_DEBUG(@"This is where we save the application data during a signal  %d",sig);
+    // Save application data on crash
 }
 
 

@@ -9,15 +9,16 @@
 #import "TSimpleList.h"
 #import "Box2D.h"
 
-@interface Tb2JointList : TSimpleList{
-    b2Joint** content;
+@interface b2JointList : TSimpleList{
+    
 }
 
 
-- (b2Joint**)content;
-
 - (void)addValue:(b2Joint*)value;
-- (b2Joint*)getValue:(int)idx;
+- (void)addValue:(b2Joint *)value withName:(NSString *)name;
+
+- (b2Joint*)getValueAt:(int)idx;
+- (b2Joint *)getValueByName:(NSString *)name;
 
 
 @end

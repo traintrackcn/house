@@ -6,34 +6,34 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "SceneManager.h"
+#import "HSSceneManager.h"
 #import "HSMainLayer.h"
 #import "cocos2d.h"
 
 
 
-static SceneManager *_sharedSceneManager;
+static HSSceneManager *_sharedSceneManager;
 
 
-@implementation SceneManager
+@implementation HSSceneManager
 
 @synthesize scene,layer;
 
 
 + (id)sharedInstance{
     if (!_sharedSceneManager) {
-        _sharedSceneManager = [[SceneManager alloc] init];
+        _sharedSceneManager = [[HSSceneManager alloc] init];
     }
     return _sharedSceneManager;
 }
 
 + (id)sharedScene{
-    return [[SceneManager sharedInstance] scene];
+    return [[HSSceneManager sharedInstance] scene];
 }
 
 
 + (id)sharedLayer{
-    return [[SceneManager sharedInstance] layer];
+    return [[HSSceneManager sharedInstance] layer];
 }
 
 - (id)init{

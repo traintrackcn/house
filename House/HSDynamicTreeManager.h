@@ -23,7 +23,7 @@ public:
 
 - (int)createProxy:(b2AABB)aabb userData:(id)userData;
 - (void)destoryProxy:(int)proxyId;
-- (id)getUserData:(int)proxyId;
+//- (id)getUserData:(int)proxyId;
 
 - (void)query;
 

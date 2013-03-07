@@ -7,13 +7,13 @@
 //
 
 #import "HSDynamicTreeManager.h"
-#import "b2WorldManager.h"
+#import "HSWorldManager.h"
 
 
 @interface HSDynamicTreeManager(){
-    NSMutableDictionary *userDataDic;
+//    NSMutableDictionary *userDataDic;
     HSDynamicTreeManagerCInterface cInterface;
-    b2WorldManager *worldM;
+    HSWorldManager *worldM;
     b2DynamicTree tree;
     
     b2RayCastInput rayCastInput;
@@ -40,8 +40,8 @@ static HSDynamicTreeManager *____instanceHSDynamicTreeManager;
 - (id)init{
     self = [super init];
     if (self) {
-        userDataDic = [NSMutableDictionary dictionary];
-        worldM = [b2WorldManager sharedInstance];
+//        userDataDic = [NSMutableDictionary dictionary];
+        worldM = [HSWorldManager sharedInstance];
         screenWHalf = [[TDeviceUtil sharedInstance] screenWidthHalf];
         screenHHalf = [[TDeviceUtil sharedInstance] screenHeightHalf];
     }
@@ -57,6 +57,8 @@ static HSDynamicTreeManager *____instanceHSDynamicTreeManager;
 - (int)createProxy:(b2AABB)aabb userData:(id)userData{
 //    return 0;
     int proxyId = tree.CreateProxy(aabb, nil);
+    
+    LOG_DEBUG(@"create proxy Id -> %d", proxyId);
 //    NSNumber *key = [NSNumber numberWithInt:proxyId];
 //    [userDataDic setObject:userData forKey:key];
     return proxyId;
@@ -64,18 +66,23 @@ static HSDynamicTreeManager *____instanceHSDynamicTreeManager;
 
 
 - (void)destoryProxy:(int)proxyId{
+    
+    if (proxyId == -1) return;
+    
+    LOG_DEBUG(@"destory proxy Id -> %d", proxyId);
+    
     tree.DestroyProxy(proxyId);
     
-    NSNumber *key = [NSNumber numberWithInt:proxyId];
-    
-    [userDataDic removeObjectForKey:key];
+//    NSNumber *key = [NSNumber numberWithInt:proxyId];
+//    
+//    [userDataDic removeObjectForKey:key];
     
 }
 
-- (id)getUserData:(int)proxyId{
-    NSNumber *key = [NSNumber numberWithInt:proxyId];
-    return [userDataDic objectForKey:key];
-}
+//- (id)getUserData:(int)proxyId{
+//    NSNumber *key = [NSNumber numberWithInt:proxyId];
+//    return [userDataDic objectForKey:key];
+//}
 
 - (void)moveProxy:(int)proxyId{
     //    tree.MoveProxy(proxyId, <#const b2AABB &aabb1#>, <#const b2Vec2 &displacement#>);

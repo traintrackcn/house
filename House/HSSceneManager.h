@@ -12,7 +12,7 @@
 @class CCLayer;
 
 
-@interface SceneManager : NSObject{
+@interface HSSceneManager : NSObject{
 //    CCScene *scene;
 }
 
