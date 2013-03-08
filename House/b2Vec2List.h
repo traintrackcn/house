@@ -9,13 +9,13 @@
 #import "TSimpleList.h"
 #import "Box2D.h"
 
-@interface Tb2VecList : TSimpleList{
-    b2Vec2* content;
+@interface b2Vec2List : TSimpleList{
+    
 }
 
-- (b2Vec2*)content;
+
 - (void)addValue:(b2Vec2)value;
-- (b2Vec2)getValue:(int)idx;
+- (b2Vec2)getValueAt:(int)idx;
 
 
 @end

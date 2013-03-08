@@ -32,8 +32,16 @@ static HSActorDescriptionManager * ____instanceHSActorDescriptionManager;
         
         
         //init actor descriptions
+        NSArray *arr = [NSArray arrayWithObjects:
+                        kActorDescriptionTerrain1,
+                        kActorDescriptionCar1,
+                        nil];
+        for (int i=0; i<[arr count]; i++ ) {
+            NSString *key = [arr objectAtIndex:i];
+            [self addValueForKey:key];
+        }
         
-        
+       
         
     }
     return self;

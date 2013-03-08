@@ -49,13 +49,26 @@ static HSMapEngine* _sharedb2MapEngine;
         keyYList = [[TFloatList alloc] initWithSize:MAX_TERRAIN_KEY_COUNT];
         
         //gen terrains
-        
-        [[HSActorBase alloc] initWithKey:kActorDescriptionTerrain1];
-        
+        float startGlX = 0;
+        float startGlY = 0;
+        b2Filter filterGround;
+        filterGround.categoryBits  = b2ActorCategoryGround;
+        filterGround.maskBits = b2ActorMaskGround;
+        for (int i=0; i<40; i++) {
+            float glX = startGlX + 320*i;
+            float glY = startGlY + 64*i;
+            glY = 0;
+            [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(glX, glY) filter:filterGround];
+        }
+
+//        [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(0, 0.0f) filter:filterGround];
+//        [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(320, 64.0f) filter:filterGround];
 //        for ( int i=0; i<5000; i++) {
         
-        
-        HSActorBase *actor = [[HSActorBase alloc] initWithKey:kActorDescriptionTestCar];
+        b2Filter filterVeihcle;
+        filterVeihcle.categoryBits  = b2ActorCategoryVehicle;
+        filterVeihcle.maskBits = b2ActorMaskVehicle;
+        HSActorBase *actor = [HSActorBase instanceWithKey:kActorDescriptionCar1 glPosOffset:CGPointMake(100.0f,100.0f) filter:filterVeihcle];
         [[HSActorController sharedInstance] focusActorById:[actor actorId]];
 
 //        [[HSActorManager sharedInstance] removeValueById:[actor actorId]];

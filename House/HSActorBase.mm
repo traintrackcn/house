@@ -12,6 +12,7 @@
 
 #import "b2BodyList.h"
 #import "b2JointList.h"
+#import "b2Vec2List.h"
 
 #import "HSActorDescriptionManager.h"
 #import "HSDynamicTreeManager.h"
@@ -23,9 +24,14 @@
     b2BodyList *m_bodies;
     b2JointList *m_joints;
     
+    
     b2World *world;
     
     int b2BodyBaseIdx;
+    
+    b2Vec2 b2PosOffset;
+    
+//    b2Vec2List *verticesGround;
 }
 
 @end
@@ -42,24 +48,33 @@
 }
 
 
-- (id)initWithKey:(NSString *)key{
+- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter{
     self = [self init];
     if (self) {
+        _filter = filter;
+        b2PosOffset = [[HSWorldManager sharedInstance] convertToB2PosForGLPos:glPosOffset];
         //init proxyId & actorId
         [self resetProxyId];
         b2BodyBaseIdx = 0;
+        
+        
         world = [HSWorldManager sharedb2World];
         id worldValue = [[HSActorDescriptionManager sharedInstance] getValueForKey:key];
-        if (worldValue == nil) {
-            [[HSActorDescriptionManager sharedInstance] addValueForKey:key];
-            worldValue = [[HSActorDescriptionManager sharedInstance] getValueForKey:key];
-        }
+//        LOG_DEBUG(@"worldValue -> %@", worldValue);
         [self parse:worldValue];
         
         [[HSActorManager sharedInstance] setValue:self];
+        b2PosOffset = b2Vec2 (0,0);
     }
+    
+    
     return self;
 }
+
++ (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter{
+    return [[HSActorBase alloc] initWithKey:key glPosOffset:glPosOffset filter:filter];
+}
+
 
 
 #pragma mark - properties
@@ -153,6 +168,7 @@
     
     [m_bodies free];
     [m_joints free];
+    [_verticesG free];
 }
 
 
@@ -231,7 +247,8 @@
     
     bodyDef.type = (b2BodyType)[self jsonToInt:@"type" jsonObj:bodyValue defaultValue:0];
     
-    bodyDef.position = [self jsonToVec:@"position" jsonObj:bodyValue];
+    bodyDef.position = [self jsonToVecOffset:@"position" jsonObj:bodyValue];
+    
     
     bodyDef.angle = [self jsonToFloat:@"angle" jsonObj:bodyValue defaultValue:0];
     
@@ -276,9 +293,12 @@
     //may be necessary if user has overridden mass characteristics
     b2MassData massData;
     massData.mass = [self jsonToFloat:@"massData-mass" jsonObj:bodyValue defaultValue:0];
-    massData.center = [self jsonToVec:@"massData-center" jsonObj:bodyValue];
+//    massData.center = [self jsonToVec:@"massData-center" jsonObj:bodyValue]; //mass-center need local location
+    massData.center = [self jsonToVec:@"massData-center" jsonObj:bodyValue]; //mass-center need local location
     massData.I = [self jsonToFloat:@"massData-I" jsonObj:bodyValue defaultValue:0];
     body->SetMassData(&massData);
+    
+//    LOG_DEBUG(@"massData.center %f %f", massData.center.x,massData.center.y);
     
 //    LOG_DEBUG(@"create body end ===================");
 }
@@ -306,8 +326,7 @@
     id fixtureValueLoop = [fixtureValue objectForKey:@"loop"];
     id fixtureValueChain = [fixtureValue objectForKey:@"chain"];
     id fixtureValuePolygon = [fixtureValue objectForKey:@"polygon"];
-    
-    
+
 //    LOG_DEBUG(@"fixtureValueCircle -> %@", fixtureValueCircle);
 //    LOG_DEBUG(@"fixtureValuePolygon -> %@", fixtureValuePolygon);
     
@@ -321,6 +340,7 @@
         fixture = body->CreateFixture(&fixtureDef);
     }
     else if ( fixtureValueEdge ) {
+
         b2EdgeShape edgeShape;
         edgeShape.m_vertex1 =  [self jsonToVec:@"vertex1" jsonObj:fixtureValueEdge];
         edgeShape.m_vertex2 = [self jsonToVec:@"vertex2" jsonObj:fixtureValueEdge];
@@ -346,15 +366,38 @@
         delete[] vertices;
     }
     else if ( fixtureValueChain) {
+        
+        
+//        LOG_DEBUG(@"create shape chain ");
+        
         b2ChainShape chainShape;
         id fixtureValueChainVertices = [fixtureValueChain objectForKey:@"vertices"];
         NSArray *fixtureValueChainVerticesXArr = [fixtureValueChainVertices objectForKey:@"x"];
         int numVertices = [fixtureValueChainVerticesXArr count];
         b2Vec2* vertices = new b2Vec2[numVertices];
         
-        for (int i = 0; i < numVertices; i++){
-            vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
+        
+        // save ground key point to generate actor
+        if (_filter.categoryBits == b2ActorCategoryGround) {
+//            LOG_DEBUG(@"This is a chain shape of ground");
+            _verticesG = [[b2Vec2List alloc] initWithSize:numVertices];
+            for (int i = 0; i < numVertices; i++){
+                vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
+                [_verticesG addValue:[self jsonToVecOffset:@"vertices" jsonObj:fixtureValueChain index:i]];
+                
+//                b2Vec2 vec = [_verticesG getValueAt:i];
+//                LOG_DEBUG(@"vec -> %f %f", vec.x, vec.y);
+            }
+            
+            LOG_DEBUG(@"_verticesG count -> %d", [_verticesG count]);
+        }else{
+            for (int i = 0; i < numVertices; i++){
+                vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
+            }
         }
+        
+        
+        
         chainShape.CreateChain(vertices, numVertices);
         chainShape.m_hasPrevVertex = [self jsonToBool:@"hasPrevVertex" jsonObj:fixtureValueChain defaultValue:NO];
         chainShape.m_hasNextVertex = [self jsonToBool:@"hasNextVertex" jsonObj:fixtureValueChain defaultValue:NO];
@@ -418,7 +461,9 @@
     
     if ([fixtureName isEqualToString:@"aabb"]) {
         
-        _aabb = fixture->GetAABB(0);
+        //Yeah every fixture has 1 to m child fixtures. For fixtures with a single child (circle, polygon, edge), the index is zero. For chain shapes, the index is 0 to m-1.
+        _aabb = [self combineAABBForFixture:fixture];
+        
         _proxyId = [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil];
         _actorId = _proxyId;
         
@@ -426,6 +471,7 @@
         b2BodyBaseIdx = bodyIndex;
         
         LOG_DEBUG(@"b2BodyBaseIdx -> %d", bodyIndex);
+        LOG_DEBUG(@"aabb lower %f %f  upper %f %f", _aabb.lowerBound.x,_aabb.lowerBound.y,_aabb.upperBound.x,_aabb.upperBound.y);
         
 //        [[HSDynamicTreeManager sharedInstance] destoryProxy:_proxyId];
 //        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil];  //proxy 1
@@ -616,29 +662,43 @@
     
 //    return joint;
 }
-    
-#pragma mark - json utils
 
-- (b2Vec2)jsonToVec:(NSString *)key jsonObj:(id)jsonObj{
-    return [self jsonToVec:key jsonObj:jsonObj index:-1];
+
+- (b2AABB)combineAABBForFixture:(b2Fixture *)fixture{
+    b2AABB tmpAABB;
+    int childCount = fixture->GetShape()->GetChildCount();
+    LOG_DEBUG(@"childCount -> %d", childCount);
+    for (int i=0; i<childCount; i++) {
+        
+        if (i==0) {
+            tmpAABB = fixture->GetAABB(i);
+            continue;
+        }
+        tmpAABB.Combine(fixture->GetAABB(i));
+    }
+
+    return tmpAABB;
 }
 
-- (b2Vec2)jsonToVec:(NSString *)key jsonObj:(id)jsonObj index:(int)index{
+#pragma mark - json utils
+
+- (b2Vec2)jsonToVecOffset:(NSString *)key jsonObj:(id)jsonObj{
+    return [self jsonToVecOffset:key jsonObj:jsonObj index:-1];
+}
+
+
+- (b2Vec2)jsonToVecOffset:(NSString *)key jsonObj:(id)jsonObj index:(int)index{
     id value = [jsonObj objectForKey:key];
-    b2Vec2 vec = b2Vec2(0,0);
+    b2Vec2 vec;
 //    LOG_DEBUG(@"key-> %@ value -> %@", key,value);
     
-    if ([value isKindOfClass:[NSNumber class]]) {
-        return vec;
+    if ([value isKindOfClass:[NSNumber class]]) { //因为表示的是速度，所以不用加offset
+        return b2PosOffset;
     }
     
     if (index > -1) {
         NSArray *xArr = [value objectForKey:@"x"];
         NSArray *yArr = [value objectForKey:@"y"];
-        
-//        LOG_DEBUG(@"xArr -> %@", xArr);
-//        LOG_DEBUG(@"yArr -> %@", yArr);
-//        return vec;
         
         vec.x = [[xArr objectAtIndex:index] floatValue];
         vec.y = [[yArr objectAtIndex:index] floatValue];
@@ -647,9 +707,42 @@
         vec.x = [self jsonToFloat:@"x" jsonObj:value defaultValue:0];
         vec.y = [self jsonToFloat:@"y" jsonObj:value defaultValue:0];
     }
-        
+    
+    vec += b2PosOffset;
+    
     return vec;
+//    return b2Vec2(vec.x+b2PosOffset.x, vec.y+b2PosOffset.y);
 }
+
+- (b2Vec2)jsonToVec:(NSString *)key jsonObj:(id)jsonObj{
+    return [self jsonToVec:key jsonObj:jsonObj index:-1];
+}
+
+- (b2Vec2)jsonToVec:(NSString *)key jsonObj:(id)jsonObj index:(int)index{
+    id value = [jsonObj objectForKey:key];
+    b2Vec2 vec;
+    //    LOG_DEBUG(@"key-> %@ value -> %@", key,value);
+    
+    if ([value isKindOfClass:[NSNumber class]]) { //因为表示的是速度，所以不用加offset
+        return b2Vec2 (0,0);
+    }
+    
+    if (index > -1) {
+        NSArray *xArr = [value objectForKey:@"x"];
+        NSArray *yArr = [value objectForKey:@"y"];
+        
+        vec.x = [[xArr objectAtIndex:index] floatValue];
+        vec.y = [[yArr objectAtIndex:index] floatValue];
+    }
+    else {
+        vec.x = [self jsonToFloat:@"x" jsonObj:value defaultValue:0];
+        vec.y = [self jsonToFloat:@"y" jsonObj:value defaultValue:0];
+    }
+    
+    return vec;
+    //    return b2Vec2(vec.x+b2PosOffset.x, vec.y+b2PosOffset.y);
+}
+
 
 - (int)jsonToInt:(NSString *)key jsonObj:(id)jsonObj defaultValue:(int)defalutValue{
     id value = [jsonObj objectForKey:key];

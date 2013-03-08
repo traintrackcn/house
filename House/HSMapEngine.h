@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "Box2D.h"
 #import "TIntList.h"
-#import "Tb2VecList.h"
 #import "TFloatList.h"
 
 
@@ -20,7 +19,5 @@
   
 
 + (HSMapEngine*)sharedInstance;
-
-
 
 @end

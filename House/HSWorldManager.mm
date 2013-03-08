@@ -167,9 +167,9 @@ static HSWorldManager* _sharedb2WorldManager;
         uint32 flags = 0;
         flags += b2Draw::e_shapeBit;
         flags += b2Draw::e_jointBit;
-//        flags += b2Draw::e_aabbBit;
+        flags += b2Draw::e_aabbBit;
 //        flags += b2Draw::e_pairBit;
-//        flags += b2Draw::e_centerOfMassBit;    
+        flags += b2Draw::e_centerOfMassBit;    
         debugDraw->SetFlags(flags);
         world->SetDebugDraw(debugDraw);      
         debugDraw->SetRatio(PTM_RATIO);
@@ -279,6 +279,13 @@ static HSWorldManager* _sharedb2WorldManager;
     float x = b2Pos.x*PTM_RATIO;
     float y = b2Pos.y*PTM_RATIO;
     return CGPointMake(x, y);
+}
+
+- (b2Vec2)convertToB2PosForGLPos:(CGPoint)glPos{
+//    float scale = _scale;
+    b2Vec2 b2Pos = b2Vec2(glPos.x/PTM_RATIO, glPos.y/PTM_RATIO);
+//    LOG_DEBUG(@"b2LocClickedInWorld -> x %f y%f  ",b2PosClickedInWorld.x,b2PosClickedInWorld.y);
+    return b2Pos;
 }
 
 - (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld{

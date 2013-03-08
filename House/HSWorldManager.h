@@ -41,6 +41,7 @@
 
 - (CGPoint)convertToGLPosInWorldForB2Pos:(b2Vec2)b2Pos;
 - (b2Vec2)convertToB2PosForGLPosClickedInWorld:(CGPoint)glPosClickedInWorld;
+- (b2Vec2)convertToB2PosForGLPos:(CGPoint)glPos;
 - (float)convertToLayerAngle:(float)radian;
 - (float)convertTob2Radian:(float)angle;
 

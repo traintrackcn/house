@@ -13,27 +13,30 @@
 
 
 typedef enum{
-    b2ActorCategoryLand = 1,
-    b2ActorCategoryPlayer = 2,
+    b2ActorCategoryGround = 1,
+    b2ActorCategoryAnimal = 2,
     b2ActorCategoryVehicle = 4,
-    b2ActorCategoryBackground = 8,
-    b2ActorCategoryTrain = 16,
-    b2ActorCategoryAircraft = 32,
+    b2ActorCategory1 = 8,
+    b2ActorCategory2 = 16,
+    b2ActorCategory3 = 32,
     b2ActorCategory4 = 64,
     b2ActorCategory5 = 128
 }b2ActorCategory;
 
 
 typedef enum{
-    b2ActorMaskLand = b2ActorCategoryPlayer|b2ActorCategoryVehicle,
-    b2ActorMaskPlayer = b2ActorCategoryLand,
-    b2ActorMaskVehicle = b2ActorCategoryLand,
-    b2ActorMaskBackground = 0,
+    b2ActorMaskGround = b2ActorCategoryVehicle,
+    b2ActorMaskAnimal = b2ActorCategoryGround,
+    b2ActorMaskVehicle = b2ActorCategoryGround,
+    b2ActorMask1 = -1,
     b2ActorMask2 = -1,
     b2ActorMask3 = -1,
     b2ActorMask4 = -1,
     b2ActorMask5 = -1
 }b2ActorMask;
+
+
+@class b2Vec2List;
 
 @interface HSActorBase : NSObject;
 
@@ -45,13 +48,20 @@ typedef enum{
 @property (nonatomic, assign) CGPoint glPos;    // 0,0 in r.u.b.e cordinate
 @property (nonatomic, assign) b2Vec2 b2Pos;
 
+@property (nonatomic, strong) b2Vec2List *verticesG; //vertices of gournd ( when catagory is land, save )
+
 
 
 #pragma mark - initialize methods
 
-//+ (id)instance;
+//+ (HSActorBase *)instanceWithKey:(NSString *)key;
+//+ (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset;
++ (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter;
 
-- (id)initWithKey:(NSString *)key;
+
+//- (id)initWithKey:(NSString *)key;
+//- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset;
+- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter;
 
 #pragma mark - properties
 

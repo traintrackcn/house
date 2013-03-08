@@ -6,33 +6,36 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "Tb2VecList.h"
+#import "b2Vec2List.h"
 
-@implementation Tb2VecList
+@interface b2Vec2List(){
+    b2Vec2* list;
+}
+
+@end
+
+@implementation b2Vec2List
 
 - (id)initWithSize:(int)size{
     self = [super initWithSize:size];
     if (self) {
-        content = new b2Vec2[size];
+        list = new b2Vec2[size];
     }
     return self;
 }
 
-- (b2Vec2*)content{
-    return content;
-}
 
 - (void)addValue:(b2Vec2)value{
-    content[count] = value;
+    list[count] = value;
     [self countPP];
 }
 
-- (b2Vec2)getValue:(int)idx{
-    return content[idx];
+- (b2Vec2)getValueAt:(int)idx{
+    return list[idx];
 }
 
 - (void)free{
-    free(content);
+    delete[] list;
 }
 
 @end

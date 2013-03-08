@@ -60,6 +60,11 @@
 //    LOG_DEBUG(@"world pos: %f %f", pos.x, pos.y);
     float targetX = (-pos.x*scale+[[TDeviceUtil sharedInstance] screenWidthHalf]);
     float targetY = (-pos.y*scale+[[TDeviceUtil sharedInstance] screenHeightHalf]);
+    
+    if (![TDeviceUtil isPortrait]) {
+        targetX = (-pos.x*scale+[[TDeviceUtil sharedInstance]  screenHeightHalf]);
+        targetY = (-pos.y*scale+[[TDeviceUtil sharedInstance] screenWidthHalf]);
+    }
 
     [self setPosition:CGPointMake(targetX,targetY)];
     [self setScale:scale];

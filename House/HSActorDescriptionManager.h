@@ -10,7 +10,7 @@
 
 
 
-#define kActorDescriptionTestCar @"testCar"
+#define kActorDescriptionCar1 @"car1"
 #define kActorDescriptionTerrain1 @"terrain1"
 
 
