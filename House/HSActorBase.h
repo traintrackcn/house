@@ -48,7 +48,7 @@ typedef enum{
 @property (nonatomic, assign) CGPoint glPos;    // 0,0 in r.u.b.e cordinate
 @property (nonatomic, assign) b2Vec2 b2Pos;
 
-@property (nonatomic, strong) b2Vec2List *verticesG; //vertices of gournd ( when catagory is land, save )
+@property (nonatomic, strong) b2Vec2List *slotsG; //vertices of gournd ( when catagory is land, save )
 
 
 

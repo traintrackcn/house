@@ -15,11 +15,12 @@
 #import "HSActorController.h"
 #import "HSActorBase.h"
 #import "HSActorDescriptionManager.h"
+#import "b2Vec2List.h"
 
 
 @interface HSMapEngine() {
-    TFloatList* keyXList;   //static actor/ground x值
-    TFloatList* keyYList; // actor/ground 对应key的 y值
+    TIntList *actorIdsG; // index of ground
+//    NSMutableArray *slotsGArr; // slots of ground
 }
 
 @end
@@ -45,8 +46,8 @@ static HSMapEngine* _sharedb2MapEngine;
     self = [super init];
     if (self) {
 
-        keyXList = [[TFloatList alloc] initWithSize:MAX_TERRAIN_KEY_COUNT];
-        keyYList = [[TFloatList alloc] initWithSize:MAX_TERRAIN_KEY_COUNT];
+        actorIdsG = [[TIntList alloc] initWithSize:10000];
+//        slotsGArr = [NSMutableArray arrayWithCapacity:10000];
         
         //gen terrains
         float startGlX = 0;
@@ -58,7 +59,9 @@ static HSMapEngine* _sharedb2MapEngine;
             float glX = startGlX + 320*i;
             float glY = startGlY + 64*i;
             glY = 0;
-            [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(glX, glY) filter:filterGround];
+            HSActorBase *actor = [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(glX, glY) filter:filterGround];
+            
+            [actorIdsG addValue:[actor actorId]];
         }
 
 //        [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(0, 0.0f) filter:filterGround];
@@ -79,7 +82,11 @@ static HSMapEngine* _sharedb2MapEngine;
 
 
 
-
-
+- (b2Vec2)getB2PosAtIndexG:(int)indexG indexSlot:(int)indexSlot{
+    int actorId = [actorIdsG getValue:indexG];
+    HSActorBase *actor = [[HSActorManager sharedInstance] getValueById:actorId];
+    b2Vec2List *slotsG = [actor slotsG];
+    return [slotsG getValueAt:indexSlot];
+}
 
 @end

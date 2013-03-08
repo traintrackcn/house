@@ -168,7 +168,7 @@
     
     [m_bodies free];
     [m_joints free];
-    [_verticesG free];
+    [_slotsG free];
 }
 
 
@@ -380,16 +380,16 @@
         // save ground key point to generate actor
         if (_filter.categoryBits == b2ActorCategoryGround) {
 //            LOG_DEBUG(@"This is a chain shape of ground");
-            _verticesG = [[b2Vec2List alloc] initWithSize:numVertices];
+            _slotsG = [[b2Vec2List alloc] initWithSize:numVertices];
             for (int i = 0; i < numVertices; i++){
                 vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
-                [_verticesG addValue:[self jsonToVecOffset:@"vertices" jsonObj:fixtureValueChain index:i]];
+                [_slotsG addValue:[self jsonToVecOffset:@"vertices" jsonObj:fixtureValueChain index:i]];
                 
 //                b2Vec2 vec = [_verticesG getValueAt:i];
 //                LOG_DEBUG(@"vec -> %f %f", vec.x, vec.y);
             }
             
-            LOG_DEBUG(@"_verticesG count -> %d", [_verticesG count]);
+//            LOG_DEBUG(@"_verticesG count -> %d", [_verticesG count]);
         }else{
             for (int i = 0; i < numVertices; i++){
                 vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
