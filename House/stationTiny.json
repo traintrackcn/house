@@ -1,0 +1,50 @@
+
+{
+   "allowSleep" : true,
+   "autoClearForces" : true,
+   "body" : 
+   [
+      
+      {
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "fixture" : 
+         [
+            
+            {
+               "density" : 1,
+               "friction" : 0.2000000029802322,
+               "name" : "aabb",
+               "polygon" : 
+               {
+                  "vertices" : 
+                  {
+                     "x" : [ 1.994119048118591, -1.973559379577637, -0.50, 0.50 ],
+                     "y" : [ 2.488399505615234, 2.47961425781250, -0.50, -0.50 ]
+                  }
+               }
+            }
+         ],
+         "linearVelocity" : 0,
+         "name" : "body0",
+         "position" : 
+         {
+            "x" : 0,
+            "y" : 0.50
+         },
+         "type" : 0
+      }
+   ],
+   "continuousPhysics" : true,
+   "gravity" : 
+   {
+      "x" : 0,
+      "y" : -10.0
+   },
+   "positionIterations" : 3,
+   "stepsPerSecond" : 60.0,
+   "subStepping" : false,
+   "velocityIterations" : 8,
+   "warmStarting" : true
+}

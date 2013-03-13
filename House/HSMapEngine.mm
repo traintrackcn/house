@@ -16,10 +16,11 @@
 #import "HSActorBase.h"
 #import "HSActorDescriptionManager.h"
 #import "b2Vec2List.h"
+#import "HSActorGround.h"
 
 
 @interface HSMapEngine() {
-    TIntList *actorIdsG; // index of ground
+    TIntList *actorIdsGround; // index of ground
 //    NSMutableArray *slotsGArr; // slots of ground
 }
 
@@ -46,47 +47,73 @@ static HSMapEngine* _sharedb2MapEngine;
     self = [super init];
     if (self) {
 
-        actorIdsG = [[TIntList alloc] initWithSize:10000];
+        actorIdsGround = [[TIntList alloc] initWithSize:10000];
 //        slotsGArr = [NSMutableArray arrayWithCapacity:10000];
         
         //gen terrains
         float startGlX = 0;
         float startGlY = 0;
-        b2Filter filterGround;
-        filterGround.categoryBits  = b2ActorCategoryGround;
-        filterGround.maskBits = b2ActorMaskGround;
-        for (int i=0; i<40; i++) {
+        for (int i=0; i<5; i++) {
             float glX = startGlX + 320*i;
             float glY = startGlY + 64*i;
             glY = 0;
-            HSActorBase *actor = [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(glX, glY) filter:filterGround];
+            CGPoint glPosOffset = CGPointMake(glX, glY);
+            HSActorBase *actor = [[HSActorGround alloc] initWithKey:kActorDescriptionTerrain1 glPosOffset:glPosOffset filter:[HSActorBase filterGround]];
             
-            [actorIdsG addValue:[actor actorId]];
+            [actorIdsGround addValue:[actor actorId]];
+            
+            
+            b2Vec2 b2Pos = [self getB2PosAtIndexGround:i indexSlot:10];
+//            LOG_DEBUG(@"b2Pos  x:%f y:%f", b2Pos.x, b2Pos.y);
+            [HSActorBase instanceWithKey:kActorDescriptionStationTiny b2PosOffset:b2Pos filter:[HSActorBase filterBackground]];
+            
         }
 
 //        [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(0, 0.0f) filter:filterGround];
 //        [HSActorBase instanceWithKey:kActorDescriptionTerrain1 glPosOffset:CGPointMake(320, 64.0f) filter:filterGround];
 //        for ( int i=0; i<5000; i++) {
-        
-        b2Filter filterVeihcle;
-        filterVeihcle.categoryBits  = b2ActorCategoryVehicle;
-        filterVeihcle.maskBits = b2ActorMaskVehicle;
-        HSActorBase *actor = [HSActorBase instanceWithKey:kActorDescriptionCar1 glPosOffset:CGPointMake(100.0f,100.0f) filter:filterVeihcle];
+
+        HSActorBase *actor = [HSActorBase instanceWithKey:kActorDescriptionCar1 glPosOffset:CGPointMake(100.0f,100.0f) filter:[HSActorBase filterVehicle]];
         [[HSActorController sharedInstance] focusActorById:[actor actorId]];
 
 //        [[HSActorManager sharedInstance] removeValueById:[actor actorId]];
 //        }
+        
+        
+//        int indexG = 3;
+//        for (int i=0; i<[self getSlotsCountAtIndexGround:indexG]; i++) {
+//            b2Vec2 b2Pos = [self getB2PosAtIndexGround:indexG indexSlot:i];
+//            LOG_DEBUG(@"b2Pos  x:%f y:%f", b2Pos.x, b2Pos.y);
+//            [HSActorBase instanceWithKey:kActorDescriptionStationTiny b2PosOffset:b2Pos filter:[HSActorBase filterBackground]];
+//        }
+        
+//        b2Vec2 b2Pos = [self getB2PosAtIndexGround:0 indexSlot:3];
+//        LOG_DEBUG(@"b2Pos  x:%f y:%f", b2Pos.x, b2Pos.y);
+//        [HSActorBase instanceWithKey:kActorDescriptionStationTiny b2PosOffset:b2Pos filter:[HSActorBase filterBackground]];
+        
     }
     return self;
 }
 
 
 
-- (b2Vec2)getB2PosAtIndexG:(int)indexG indexSlot:(int)indexSlot{
-    int actorId = [actorIdsG getValue:indexG];
+- (b2Vec2)getB2PosAtIndexGround:(int)indexG indexSlot:(int)indexS{
+    int actorId = [actorIdsGround getValue:indexG];
     HSActorBase *actor = [[HSActorManager sharedInstance] getValueById:actorId];
-    b2Vec2List *slotsG = [actor slotsG];
-    return [slotsG getValueAt:indexSlot];
+    b2Vec2List *slotsG = [actor slotsGround];
+    return [slotsG getValueAt:indexS];
 }
+
+- (int)getSlotsCountAtIndexGround:(int)indexG{
+    int actorId = [actorIdsGround getValue:indexG];
+    HSActorBase *actor = [[HSActorManager sharedInstance] getValueById:actorId];
+    b2Vec2List *slotsG = [actor slotsGround];
+    return [slotsG count];
+}
+
+//- (void)createActor:(NSString *)description indexGround:(int)indexG indexSlot:(int)indexS{
+//    b2Vec2 b2Pos = [self getB2PosAtIndexGround:indexG indexSlot:indexS];
+//    
+//}
 
 @end

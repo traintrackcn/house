@@ -49,7 +49,7 @@ static HSActorManager* _sharedb2ActorManager;
         return;
     }
 //    LOG_DEBUG(@"");
-    LOG_DEBUG(@"========================\nactor %d was created\n========================", idx);
+//    LOG_DEBUG(@"========================\nactor %d was created\n========================", idx);
 //    LOG_DEBUG(@"");
     
     [list replaceObjectAtIndex:idx withObject:actor];

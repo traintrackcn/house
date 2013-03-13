@@ -12,6 +12,7 @@
 
 #define kActorDescriptionCar1 @"car1"
 #define kActorDescriptionTerrain1 @"terrain1"
+#define kActorDescriptionStationTiny @"stationTiny"
 
 
 @interface HSActorDescriptionManager : NSObject
@@ -22,5 +23,8 @@
 - (void)addValue:(id)value forKey:(NSString *)key;
 - (id)getValueForKey:(NSString *)key;
 - (void)deleteValueForKey:(NSString *)key;
+
+
+
 
 @end

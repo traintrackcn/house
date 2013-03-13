@@ -20,6 +20,7 @@
 		4A35CC8F16E9867C00201198 /* car1.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A35CC8E16E9867C00201198 /* car1.json */; };
 		4A35CCC916E9934C00201198 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A35CCC816E9934C00201198 /* Default-568h@2x.png */; };
 		4A6E7AE616E8C40100C53C9D /* terrain1.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E7AE516E8C40100C53C9D /* terrain1.json */; };
+		4A8E5DF216F05C5C00F88E8A /* stationTiny.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8E5DF116F05C5C00F88E8A /* stationTiny.json */; };
 		4A94D70316E73A8B006A0C0A /* b2BodyList.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A94D70216E73A8B006A0C0A /* b2BodyList.mm */; };
 		4A94D70416E76B72006A0C0A /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A02588216E2329300788826 /* libcocos2d.a */; };
 		4A94D70516E76B83006A0C0A /* liblibOpen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0258EE16E2329A00788826 /* liblibOpen.a */; };
@@ -46,6 +47,8 @@
 		4AB3C98D151C493B005C7664 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB3C7F7151C493A005C7664 /* Icon@2x.png */; };
 		4AB3CA68151C493B005C7664 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 4AB3C8D5151C493B005C7664 /* iTunesArtwork */; };
 		4ABAB6041515DE69003EA61A /* HSActorManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ABAB6031515DE69003EA61A /* HSActorManager.mm */; };
+		4ABE2EA416EAB9310044FA9E /* HSActorRailStation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE2EA316EAB9310044FA9E /* HSActorRailStation.mm */; };
+		4ABE2EDF16EAB9540044FA9E /* HSActorGround.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE2EDE16EAB9540044FA9E /* HSActorGround.mm */; };
 		4AC6288B151864FB00BB45FB /* HSActorController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6288A151864FB00BB45FB /* HSActorController.mm */; };
 		4AC6289A15186DA600BB45FB /* HSWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6289715186A0500BB45FB /* HSWorldManager.mm */; };
 		4AC7AFD9147CDD4200E00C93 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC7AFD8147CDD4200E00C93 /* UIKit.framework */; };
@@ -491,6 +494,8 @@
 		4A35CC8E16E9867C00201198 /* car1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = car1.json; sourceTree = "<group>"; };
 		4A35CCC816E9934C00201198 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4A6E7AE516E8C40100C53C9D /* terrain1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = terrain1.json; sourceTree = "<group>"; };
+		4A8E5DB816F0577400F88E8A /* PathFind.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = PathFind.txt; sourceTree = "<group>"; };
+		4A8E5DF116F05C5C00F88E8A /* stationTiny.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stationTiny.json; sourceTree = "<group>"; };
 		4A94D70116E73A8B006A0C0A /* b2BodyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BodyList.h; sourceTree = "<group>"; };
 		4A94D70216E73A8B006A0C0A /* b2BodyList.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = b2BodyList.mm; sourceTree = "<group>"; };
 		4A9867D216E44D9600F3797D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -521,6 +526,10 @@
 		4AB3C8D5151C493B005C7664 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		4ABAB6021515DE69003EA61A /* HSActorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSActorManager.h; sourceTree = "<group>"; };
 		4ABAB6031515DE69003EA61A /* HSActorManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSActorManager.mm; sourceTree = "<group>"; };
+		4ABE2EA216EAB9310044FA9E /* HSActorRailStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSActorRailStation.h; sourceTree = "<group>"; };
+		4ABE2EA316EAB9310044FA9E /* HSActorRailStation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSActorRailStation.mm; sourceTree = "<group>"; };
+		4ABE2EDD16EAB9540044FA9E /* HSActorGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSActorGround.h; sourceTree = "<group>"; };
+		4ABE2EDE16EAB9540044FA9E /* HSActorGround.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSActorGround.mm; sourceTree = "<group>"; };
 		4AC62889151864FA00BB45FB /* HSActorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSActorController.h; sourceTree = "<group>"; };
 		4AC6288A151864FB00BB45FB /* HSActorController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HSActorController.mm; sourceTree = "<group>"; };
 		4AC6289615186A0500BB45FB /* HSWorldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSWorldManager.h; sourceTree = "<group>"; };
@@ -676,6 +685,7 @@
 		4A1E46B416E83354001C288E /* descriptions */ = {
 			isa = PBXGroup;
 			children = (
+				4A8E5DF116F05C5C00F88E8A /* stationTiny.json */,
 				4A6E7AE516E8C40100C53C9D /* terrain1.json */,
 				4A35CC8E16E9867C00201198 /* car1.json */,
 			);
@@ -695,6 +705,10 @@
 				4A1E46B616E83ABA001C288E /* HSActorDescriptionManager.m */,
 				4A1E46B816E8899D001C288E /* HSActorLocomotive.h */,
 				4A1E46B916E8899D001C288E /* HSActorLocomotive.mm */,
+				4ABE2EA216EAB9310044FA9E /* HSActorRailStation.h */,
+				4ABE2EA316EAB9310044FA9E /* HSActorRailStation.mm */,
+				4ABE2EDD16EAB9540044FA9E /* HSActorGround.h */,
+				4ABE2EDE16EAB9540044FA9E /* HSActorGround.mm */,
 			);
 			name = Actors;
 			sourceTree = "<group>";
@@ -778,6 +792,7 @@
 			isa = PBXGroup;
 			children = (
 				4A35CCC816E9934C00201198 /* Default-568h@2x.png */,
+				4A8E5DB816F0577400F88E8A /* PathFind.txt */,
 				4AC7AFE0147CDD4200E00C93 /* House */,
 				4A11018814C56C5800F3B736 /* Resources */,
 				4AC7AFD7147CDD4200E00C93 /* Frameworks */,
@@ -1355,6 +1370,7 @@
 				4A6E7AE616E8C40100C53C9D /* terrain1.json in Resources */,
 				4A35CC8F16E9867C00201198 /* car1.json in Resources */,
 				4A35CCC916E9934C00201198 /* Default-568h@2x.png in Resources */,
+				4A8E5DF216F05C5C00F88E8A /* stationTiny.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1401,8 @@
 				4A94D70316E73A8B006A0C0A /* b2BodyList.mm in Sources */,
 				4A1E46B716E83ABA001C288E /* HSActorDescriptionManager.m in Sources */,
 				4A1E46BA16E8899E001C288E /* HSActorLocomotive.mm in Sources */,
+				4ABE2EA416EAB9310044FA9E /* HSActorRailStation.mm in Sources */,
+				4ABE2EDF16EAB9540044FA9E /* HSActorGround.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

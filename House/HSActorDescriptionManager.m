@@ -35,6 +35,7 @@ static HSActorDescriptionManager * ____instanceHSActorDescriptionManager;
         NSArray *arr = [NSArray arrayWithObjects:
                         kActorDescriptionTerrain1,
                         kActorDescriptionCar1,
+                        kActorDescriptionStationTiny,
                         nil];
         for (int i=0; i<[arr count]; i++ ) {
             NSString *key = [arr objectAtIndex:i];
@@ -53,16 +54,18 @@ static HSActorDescriptionManager * ____instanceHSActorDescriptionManager;
 - (void)addValueForKey:(NSString *)key{
     NSString *filePath = [[NSBundle mainBundle] pathForResource:key ofType:@"json"];
     NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
-//    LOG_DEBUG(@"jsonData -> %@  file -> %@", jsonData, filePath);
+
     if (jsonData){
         id worldValue = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
         [self addValue:worldValue forKey:key];
+    }else{
+         LOG_ERROR(@"load  file -> %@ error", filePath);
     }
 }
 
 - (void)addValue:(id)value forKey:(NSString *)key{
     
-    LOG_DEBUG(@"addValueForKey -> %@  value -> %@", key, value);
+//    LOG_DEBUG(@"addValueForKey -> %@  value -> %@", key, value);
     
     [data setObject:value forKey:key];
 }

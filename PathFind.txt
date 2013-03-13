@@ -1,0 +1,86 @@
+ _________ _________ _________ _________
+|         |         |         |         |
+|         |         |         |         |
+|         |         |         |         |
+|_________|_________|_________|_________|
+|         |         |         |         |
+|         |         |         |         |
+|         |         |         |         |
+|_________|_________|_________|_________|
+|         |         |         |         |
+|         |         |         |         |
+|         |         |         |         |
+|_________|_________|_________|_________|
+|         |         |         |         |
+|         |         |         |         |
+|         |         |         |         |
+|_________|_________|_________|_________|
+
+
+如图所示，共有5行（从上到下，0，1，2，3，4），5列（从左到右，0，1，2，3，4），行可以横着走，列可以竖着走
+比如火车在（0行，0.5列，即左上角第一个横短线，），要走到（4行，3.5列，右下角最后一个横短线），可以让或者先走到（0行，2.5列），然后再沿着（0.5行，3列 一直到3.5行，3列），然后再到（4行，3.5列）
+
+如此，可以定义一个二维数组[9][9],可以用[0][1]表示（0行，0.5列）,用[8][7]表示（4行，3.5列）。
+所以可以写如下函数
+
+struct Position
+{
+	uint X；
+	uint Y;
+}
+
+void FindPath（in Position Start, in Position End, out Array<Position> GoPath)
+{
+	Assert( (Start.X % 2) != (Start.Y % 2));  //确保不存在X和Y都是偶数或者奇数的情况。
+	Assert( (End.X % 2) != (End.Y % 2));
+
+	GoPath.AddItem(Start);
+
+	int MoveX = (End.X - Start.X) ;
+	int MoveY = (End.Y - Start.Y) ;
+	Position CurrentPosition = Start;
+
+	if (MoveX == 0 || MoveY == 0)
+	{
+		int DeltaX = MoveX > 0 ? 1 : -1;
+		int DeltaY = MoveY > 0 ? 1 : -1;
+		CurrentPosition.X += DeltaX;
+		CurrentPosition.Y += DeltaY;
+		MoveX -= DeltaX;
+		MoveY -= DeltaY;
+		GoPath.AddItem(CurrentPosition);
+	}
+
+	while (abs(MoveX) > 1 && abs(MoveY) > 1)
+	{
+		int DeltaX = MoveX > 0 ? 1 : -1;
+		int DeltaY = MoveY > 0 ? 1 : -1;
+		CurrentPosition.X += DeltaX;
+		CurrentPosition.Y += DeltaY;
+		MoveX -= DeltaX;
+		MoveY -= DeltaY;
+		GoPath.AddItem(CurrentPosition);
+	}
+
+	int HalfMoveX = MoveX/2;
+	int HalfMoveY = MoveY/2;
+	while (HalfMoveX != 0 || HalfMoveY != 0)
+	{
+		int DeltaX = HalfMoveX > 0 ? 2 : (HalfMoveX < 0 ? -2 : 0);
+		int DeltaY = HalfMoveY > 0 ? 2 : (HalfMoveY < 0 ? -2 : 0);
+		CurrentPosition.X += DeltaX;
+		CurrentPosition.Y += DeltaY;
+		MoveX -= DeltaX;
+		MoveY -= DeltaY;
+		HalfMoveX -= DeltaX/2;
+		HalfMoveY -= DeltaY/2;
+		GoPath.AddItem(CurrentPosition);
+	}
+
+	if (MoveX != 0 || MoveY != 0)
+	{
+		Assert( (MoveX == 0 && abs(MoveY) == 1) || ((MoveY == 0 && abs(MoveX) == 1));
+		GoPath.AddItem(End);
+	}
+	
+}

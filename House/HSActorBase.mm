@@ -29,7 +29,7 @@
     
     int b2BodyBaseIdx;
     
-    b2Vec2 b2PosOffset;
+    b2Vec2 _b2PosOffset;
     
 //    b2Vec2List *verticesGround;
 }
@@ -39,20 +39,13 @@
 @implementation HSActorBase
 
 
-- (id)init{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
-
-- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter{
+- (id)initWithKey:(NSString *)key b2PosOffset:(b2Vec2)b2PosOffset filter:(b2Filter)filter{
     self = [self init];
     if (self) {
+        
         _filter = filter;
-        b2PosOffset = [[HSWorldManager sharedInstance] convertToB2PosForGLPos:glPosOffset];
+        _b2PosOffset =  b2PosOffset;
+        
         //init proxyId & actorId
         [self resetProxyId];
         b2BodyBaseIdx = 0;
@@ -60,21 +53,30 @@
         
         world = [HSWorldManager sharedb2World];
         id worldValue = [[HSActorDescriptionManager sharedInstance] getValueForKey:key];
-//        LOG_DEBUG(@"worldValue -> %@", worldValue);
+        //        LOG_DEBUG(@"worldValue -> %@", worldValue);
         [self parse:worldValue];
         
         [[HSActorManager sharedInstance] setValue:self];
-        b2PosOffset = b2Vec2 (0,0);
+        _b2PosOffset = b2Vec2 (0,0);
     }
     
     
     return self;
+    
+}
+
+- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter{
+    b2Vec2 b2PosOffset = [[HSWorldManager sharedInstance] convertToB2PosForGLPos:glPosOffset];    
+    return [self initWithKey:key b2PosOffset:b2PosOffset filter:filter];
 }
 
 + (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter{
     return [[HSActorBase alloc] initWithKey:key glPosOffset:glPosOffset filter:filter];
 }
 
++ (HSActorBase *)instanceWithKey:(NSString *)key b2PosOffset:(b2Vec2)b2PosOffset filter:(b2Filter)filter{
+    return [[HSActorBase alloc] initWithKey:key b2PosOffset:b2PosOffset filter:filter];
+}
 
 
 #pragma mark - properties
@@ -168,7 +170,7 @@
     
     [m_bodies free];
     [m_joints free];
-    [_slotsG free];
+    [_slotsGround free];
 }
 
 
@@ -233,7 +235,7 @@
 //    LOG_DEBUG(@"bodyValue allKeys -> %@", [bodyValue allKeys]);
     
     NSString *bodyName = [self jsonToString:@"name" jsonObj:bodyValue];
-    LOG_DEBUG(@"bodyName -> %@", bodyName);
+//    LOG_DEBUG(@"bodyName -> %@", bodyName);
     if ([bodyName isEqualToString:@"_ground"]) {
         [m_bodies addValue:NULL];
         return;
@@ -307,7 +309,7 @@
 - (void)j2b2Fixture:(id)fixtureValue body:(b2Body*)body bodyIndex:(int)bodyIndex{
     
     NSString *fixtureName = [self jsonToString:@"name" jsonObj:fixtureValue];
-    LOG_DEBUG(@"fixtureName -> %@ bodyIndex -> %d", fixtureName, bodyIndex);
+//    LOG_DEBUG(@"fixtureName -> %@ bodyIndex -> %d", fixtureName, bodyIndex);
     
     b2Fixture* fixture = NULL;
     
@@ -326,9 +328,34 @@
     id fixtureValueLoop = [fixtureValue objectForKey:@"loop"];
     id fixtureValueChain = [fixtureValue objectForKey:@"chain"];
     id fixtureValuePolygon = [fixtureValue objectForKey:@"polygon"];
+    
+    
+    
+    
+//    I am a ... (categoryBits)      I collide with ...(maskBits)
+//    FRIENDLY_SHIP                  BOUNDARY | FRIENDLY_SHIP | ENEMY_SHIP
+//    ENEMY_SHIP                      BOUNDARY | FRIENDLY_SHIP | ENEMY_SHIP
+//    FRIENDLY_AIRCRAFT          BOUNDARY | ENEMY_AIRCRAFT
+//    ENEMY_AIRCRAFT              BOUNDARY | FRIENDLY_AIRCRAFT
+    
+//    Collision groups let you specify an integral group index.
+//    You can have all fixtures with the same group index always collide (positive index) or never collide (negative index).
+//    Group indices are usually used for things that are somehow related, like the parts of a bicycle.
+//    In the following example, fixture1 and fixture2 always collide, but fixture3 and fixture4 never collide.
+    
+//    fixture1Def.filter.groupIndex = 2;
+//    fixture2Def.filter.groupIndex = 2;
+//    fixture3Def.filter.groupIndex = -8;
+//    fixture4Def.filter.groupIndex = -8;
 
-//    LOG_DEBUG(@"fixtureValueCircle -> %@", fixtureValueCircle);
-//    LOG_DEBUG(@"fixtureValuePolygon -> %@", fixtureValuePolygon);
+//    if either fixture has a groupIndex of zero, use the category/mask rules as above
+//    if both groupIndex values are non-zero but different, use the category/mask rules as above
+//    if both groupIndex values are the same and positive, collide
+//    if both groupIndex values are the same and negative, don't collide
+        
+//    fixtureDef.filter.groupIndex = - _filter.categoryBits;
+    fixtureDef.filter.categoryBits = _filter.categoryBits;
+    fixtureDef.filter.maskBits = _filter.maskBits;
     
     
     if ( fixtureValueCircle  ) {
@@ -380,10 +407,14 @@
         // save ground key point to generate actor
         if (_filter.categoryBits == b2ActorCategoryGround) {
 //            LOG_DEBUG(@"This is a chain shape of ground");
-            _slotsG = [[b2Vec2List alloc] initWithSize:numVertices];
+            
+            int numSlots = numVertices - 1;  // the last vertex will be considered as first slot of next ground
+            _slotsGround = [[b2Vec2List alloc] initWithSize:numSlots];
             for (int i = 0; i < numVertices; i++){
                 vertices[i] = [self jsonToVec:@"vertices" jsonObj:fixtureValueChain index:i];
-                [_slotsG addValue:[self jsonToVecOffset:@"vertices" jsonObj:fixtureValueChain index:i]];
+                
+                if (i+1 >= numSlots) continue;
+                [_slotsGround addValue:[self jsonToVecOffset:@"vertices" jsonObj:fixtureValueChain index:i]];
                 
 //                b2Vec2 vec = [_verticesG getValueAt:i];
 //                LOG_DEBUG(@"vec -> %f %f", vec.x, vec.y);
@@ -446,19 +477,11 @@
     }
     
     
+//    Changing the collision filter at run-time
+//    fixture->SetFilterData(_filter);
     
     
-//    LOG_DEBUG(@"fixtureName -> %@ -> %@", fixtureName, fixtureValue);
-    
-//    if ( [fixtureName isEqualToString:@""]) {
-////        setFixtureName(fixture, fixtureName.c_str());
-//    }else{
-//        
-//    }
-    
-    //set aabb
-
-    
+    //set aabb    
     if ([fixtureName isEqualToString:@"aabb"]) {
         
         //Yeah every fixture has 1 to m child fixtures. For fixtures with a single child (circle, polygon, edge), the index is zero. For chain shapes, the index is 0 to m-1.
@@ -470,27 +493,9 @@
         
         b2BodyBaseIdx = bodyIndex;
         
-        LOG_DEBUG(@"b2BodyBaseIdx -> %d", bodyIndex);
-        LOG_DEBUG(@"aabb lower %f %f  upper %f %f", _aabb.lowerBound.x,_aabb.lowerBound.y,_aabb.upperBound.x,_aabb.upperBound.y);
-        
-//        [[HSDynamicTreeManager sharedInstance] destoryProxy:_proxyId];
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil];  //proxy 1
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 2
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 3
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 4
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 5
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 6
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 7
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 8
-//        
-//        [[HSDynamicTreeManager sharedInstance] destoryProxy:5]; // proxy 5
-//        
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 5
-//        [[HSDynamicTreeManager sharedInstance] createProxy:_aabb userData:nil]; // proxy 9
-        
-//        [[HSDynamicTreeManager sharedInstance] destoryProxy:_proxyId];
-        
-//        LOG_DEBUG(@"create Proxy in dynamic tree -> %d", _proxyId);
+//        LOG_DEBUG(@"b2BodyBaseIdx -> %d", bodyIndex);
+//        LOG_DEBUG(@"aabb lower %f %f  upper %f %f", _aabb.lowerBound.x,_aabb.lowerBound.y,_aabb.upperBound.x,_aabb.upperBound.y);
+     
     }
     
     
@@ -596,7 +601,7 @@
         gearDef.joint1 = [m_joints getValueAt:jointIndex1];
         gearDef.joint2 = [m_joints getValueAt:jointIndex2];
         
-        LOG_DEBUG(@"jointIndex1:%d jointIndex2:%d", jointIndex1, jointIndex2);
+//        LOG_DEBUG(@"jointIndex1:%d jointIndex2:%d", jointIndex1, jointIndex2);
         
         gearDef.ratio = [self jsonToFloat:@"ratio" jsonObj:jointValue defaultValue:0];
     }
@@ -640,7 +645,7 @@
         jointDef->bodyA = [m_bodies getValueAt:bodyIndexA];
         jointDef->bodyB = [m_bodies getValueAt:bodyIndexB];
         
-        LOG_DEBUG(@"bodyIndexA:%d bodyIndexB:%d", bodyIndexA, bodyIndexB);
+//        LOG_DEBUG(@"bodyIndexA:%d bodyIndexB:%d", bodyIndexA, bodyIndexB);
         
 //        LOG_DEBUG(@"bodyA:%i bodyB:%i", jointDef->bodyA, jointDef->bodyB);
     
@@ -667,7 +672,7 @@
 - (b2AABB)combineAABBForFixture:(b2Fixture *)fixture{
     b2AABB tmpAABB;
     int childCount = fixture->GetShape()->GetChildCount();
-    LOG_DEBUG(@"childCount -> %d", childCount);
+//    LOG_DEBUG(@"childCount -> %d", childCount);
     for (int i=0; i<childCount; i++) {
         
         if (i==0) {
@@ -692,8 +697,8 @@
     b2Vec2 vec;
 //    LOG_DEBUG(@"key-> %@ value -> %@", key,value);
     
-    if ([value isKindOfClass:[NSNumber class]]) { //因为表示的是速度，所以不用加offset
-        return b2PosOffset;
+    if ([value isKindOfClass:[NSNumber class]]) { 
+        return _b2PosOffset;
     }
     
     if (index > -1) {
@@ -708,7 +713,7 @@
         vec.y = [self jsonToFloat:@"y" jsonObj:value defaultValue:0];
     }
     
-    vec += b2PosOffset;
+    vec += _b2PosOffset;
     
     return vec;
 //    return b2Vec2(vec.x+b2PosOffset.x, vec.y+b2PosOffset.y);
@@ -783,5 +788,35 @@
     return YES;
 }
 
+
+#pragma mark - filters
+
++ (b2Filter)filterGround{
+    b2Filter f;
+    f.categoryBits  = b2ActorCategoryGround;
+    f.maskBits = b2ActorMaskGround;
+    return f;
+}
+
++ (b2Filter)filterAnimal{
+    b2Filter f;
+    f.categoryBits  = b2ActorCategoryAnimal;
+    f.maskBits = b2ActorMaskAnimal;
+    return f;
+}
+
++ (b2Filter)filterVehicle{
+    b2Filter f;
+    f.categoryBits  = b2ActorCategoryVehicle;
+    f.maskBits = b2ActorMaskVehicle;
+    return f;
+}
+
++ (b2Filter)filterBackground{
+    b2Filter f;
+    f.categoryBits  = b2ActorCategoryBackground;
+    f.maskBits = b2ActorMaskBackground;
+    return f;
+}
 
 @end

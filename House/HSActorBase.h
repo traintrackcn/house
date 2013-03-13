@@ -16,7 +16,7 @@ typedef enum{
     b2ActorCategoryGround = 1,
     b2ActorCategoryAnimal = 2,
     b2ActorCategoryVehicle = 4,
-    b2ActorCategory1 = 8,
+    b2ActorCategoryBackground = 8,
     b2ActorCategory2 = 16,
     b2ActorCategory3 = 32,
     b2ActorCategory4 = 64,
@@ -28,7 +28,7 @@ typedef enum{
     b2ActorMaskGround = b2ActorCategoryVehicle,
     b2ActorMaskAnimal = b2ActorCategoryGround,
     b2ActorMaskVehicle = b2ActorCategoryGround,
-    b2ActorMask1 = -1,
+    b2ActorMaskBackground = 0,
     b2ActorMask2 = -1,
     b2ActorMask3 = -1,
     b2ActorMask4 = -1,
@@ -48,24 +48,29 @@ typedef enum{
 @property (nonatomic, assign) CGPoint glPos;    // 0,0 in r.u.b.e cordinate
 @property (nonatomic, assign) b2Vec2 b2Pos;
 
-@property (nonatomic, strong) b2Vec2List *slotsG; //vertices of gournd ( when catagory is land, save )
+@property (nonatomic, strong) b2Vec2List *slotsGround; //vertices of gournd ( when catagory is land, save )
 
 
 
 #pragma mark - initialize methods
 
-//+ (HSActorBase *)instanceWithKey:(NSString *)key;
-//+ (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset;
+
++ (HSActorBase *)instanceWithKey:(NSString *)key b2PosOffset:(b2Vec2)b2PosOffset filter:(b2Filter)filter;
 + (HSActorBase *)instanceWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter;
 
-
-//- (id)initWithKey:(NSString *)key;
-//- (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset;
+- (id)initWithKey:(NSString *)key b2PosOffset:(b2Vec2)b2PosOffset filter:(b2Filter)filter;
 - (id)initWithKey:(NSString *)key glPosOffset:(CGPoint)glPosOffset filter:(b2Filter)filter;
 
 #pragma mark - properties
 
 - (b2Body *)b2Bodyy;
+
+#pragma mark - filters
+
++ (b2Filter)filterGround;
++ (b2Filter)filterVehicle;
++ (b2Filter)filterAnimal;
++ (b2Filter)filterBackground;
 
 
 #pragma mark - actions
